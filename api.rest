@@ -1,0 +1,62 @@
+
+
+### ----------------------------------
+### List API
+### ----------------------------------
+
+###
+// Get all list
+GET http://localhost:4400/api/v1/list
+
+
+###
+// Create a list
+POST http://localhost:4400/api/v1/list
+Content-Type: application/json
+
+{
+  "user": {
+    "name": "new user"
+  }
+}
+
+
+###
+// Delete a list
+DELETE http://localhost:4400/api/v1/list
+
+
+###
+// Update a list
+PUT http://localhost:4400/api/v1/list
+Content-Type: application/json
+
+{
+  "user": {
+    "name": "new user"
+  }
+}
+
+
+
+### ----------------------------------
+### User API
+### ----------------------------------
+
+###
+// Get a user
+GET http://localhost:4400/api/v1/user
+Content-Type: application/json
+
+
+###
+// Create a user
+POST http://localhost:4400/api/v1/user
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "new@user.com",
+    "password": "new-pass"
+  }
+}
