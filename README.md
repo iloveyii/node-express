@@ -1,19 +1,20 @@
-MERN
+Node Expresss
 ======
-MERN stands for Mongo, Express, React and Node which is an awesome tools set for any modern application especially using microservices architecture.
-There are several posts and setups available online, but in this repo I have specifically focused on best practices and simplicity for all the participating
-tools.
+This is a node and express application using Typescript. It is dockerized and can be easily used for any
+microservice.
 
 
-## Mongo
-
-
-## Express
-
-
-
-## React
+## Installation
+   * Using without docker
+     `npm install`
+     `npm start`
+   * Using docker
+     `docker-compose up`
 
 
 
-## Node
+
+## Test
+   * Run test
+     `npm run test`
+
