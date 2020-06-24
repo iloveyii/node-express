@@ -4,8 +4,14 @@
 ### ----------------------------------
 
 ###
-// Get a user
+// Get all users
 GET http://localhost:6600/api/v1/users
+Content-Type: application/json
+
+
+###
+// Get a user
+GET http://localhost:6600/api/v1/users/1
 Content-Type: application/json
 
 
@@ -24,18 +30,18 @@ Content-Type: application/json
 
 ###
 // Delete a user
-DELETE http://localhost:6600/api/v1/users/3
+DELETE http://localhost:6600/api/v1/users/1
 Content-Type: application/json
 
 
 ###
-// Create a user
+// Update a user
 PUT http://localhost:6600/api/v1/users/1
 Content-Type: application/json
 
 {
   "user": {
-    "email": "updated@user.com",
+    "email": "updated2@user.com",
     "password": "updated-pass"
   }
 }
