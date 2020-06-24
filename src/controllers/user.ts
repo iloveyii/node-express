@@ -28,9 +28,9 @@ export const getUser = (req: any, res: any, next: any) => {
 // @route  POST /api/v1/user
 export const addUser = async (req: any, res: any, next: any) => {
     try {
-        // const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {email: "email", password: "pass"};
-        // console.log({email, password});
-        // const user: any = await User.create({email, password});
+        const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {email: "email", password: "pass"};
+        console.log({email, password});
+        const user: any = await User.create({email, password});
         console.log("API User : POST /api/v1/user");
         return res.status(200).json({
             success: true,
