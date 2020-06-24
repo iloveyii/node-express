@@ -1,44 +1,4 @@
 
-
-### ----------------------------------
-### List API
-### ----------------------------------
-
-###
-// Get all list
-GET http://localhost:6600/api/v1/list
-
-
-###
-// Create a list
-POST http://localhost:6600/api/v1/list
-Content-Type: application/json
-
-{
-  "user": {
-    "name": "new user"
-  }
-}
-
-
-###
-// Delete a list
-DELETE http://localhost:6600/api/v1/list
-
-
-###
-// Update a list
-PUT http://localhost:6600/api/v1/list
-Content-Type: application/json
-
-{
-  "user": {
-    "name": "new user"
-  }
-}
-
-
-
 ### ----------------------------------
 ### User API
 ### ----------------------------------
@@ -60,3 +20,10 @@ Content-Type: application/json
     "password": "new-pass"
   }
 }
+
+
+###
+// Create a user
+DELETE http://localhost:6600/api/v1/users/3
+Content-Type: application/json
+

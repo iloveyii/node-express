@@ -66,7 +66,9 @@ export const updateUser = async (req: any, res: any, next: any) => {
 // @route  DELETE /api/v1/user
 export const deleteUser = async (req: any, res: any, next: any) => {
     try {
-        const user = [{id: 1, name: "delete"}];
+        const { id } = req.params;
+        const status = await User.destroy({where: {id}});
+        const user = [{id , name: "delete", status}];
         return res.status(200).json({
             success: true,
             data: user
