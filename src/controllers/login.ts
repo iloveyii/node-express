@@ -1,4 +1,4 @@
-const User = require("@sequelize/models").User;
+const User = require("../../sequelize/src/models").User;
 
 
 // @desc   Make a user log in

@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-const User = require("@sequelize/models").User;
+const User = require("../../sequelize/src/models").User;
 
 // @desc   Get all from User
 // @route  GET /api/v1/user
@@ -29,7 +29,7 @@ export const getUser = async (req: any, res: any, next: any) => {
         console.log("API User : GET /api/v1/user/:id");
         const {id} = req.params;
         const model = await User.findOne({where: {id}});
-        console.log(model);
+
         return res.status(200).send({
             success: true,
             data: model,
@@ -78,23 +78,24 @@ export const registerUser = async (req: any, res: any, next: any) => {
         console.log({email, password});
 
         // Check if email already registered
-        const model = User.findOne({where: {email, password}});
-        if(model) {
+        const model = await User.findOne({where: {email}});
+
+        if (model) {
             return res.status(201).send({
-                success: true,
+                success: false,
                 data: email,
                 error: "Email already registered"
             });
+        } else {
+            // Register new user
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const user: any = await User.create({email, password: hashedPassword});
+
+            return res.status(201).send({
+                success: true,
+                data: user,
+            });
         }
-
-        // Register new user
-        const hashedPassword = await bcrypt.hash(password, 10)
-        const user: any = await User.create({email, password:hashedPassword});
-
-        return res.status(201).send({
-            success: true,
-            data: user,
-        });
     } catch (error) {
         res.send(500).json({
             success: false,

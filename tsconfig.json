@@ -18,6 +18,8 @@
   },
   "include": [
     "src/**/*",
-    "server.ts"
+    "server.ts",
+    "sequelize/src/models/*",
+    "sequelize/src/config/*"
   ]
 }
