@@ -57,5 +57,8 @@
     "@types/validator": "^13.0.0",
     "sequelize-cli": "^5.5.1",
     "typescript": "^3.9.5"
+  },
+  "_moduleAliases": {
+    "@sequelize": "sequelize/src"
   }
 }
