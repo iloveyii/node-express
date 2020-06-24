@@ -27,7 +27,6 @@ app.use(express.urlencoded({extended: true}));
 // ----------------------------------
 // API Routes
 // ----------------------------------
-app.use("/api/v1/lists", list);
 app.use("/api/v1/users", user);
 
 // ----------------------------------

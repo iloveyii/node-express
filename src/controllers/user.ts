@@ -28,13 +28,17 @@ export const getUser = (req: any, res: any, next: any) => {
 // @route  POST /api/v1/user
 export const addUser = async (req: any, res: any, next: any) => {
     try {
-        const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {email: "email", password: "pass"};
+        const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {
+            email: "email",
+            password: "pass"
+        };
         console.log({email, password});
         const user: any = await User.create({email, password});
         console.log("API User : POST /api/v1/user");
-        return res.status(200).json({
+        return res.status(201).json({
             success: true,
-            data: "user"
+            data: user.getDataValue,
+            status
         });
     } catch (error) {
         res.send(500).json({
@@ -49,10 +53,21 @@ export const addUser = async (req: any, res: any, next: any) => {
 // @route  PUT /api/v1/user/1
 export const updateUser = async (req: any, res: any, next: any) => {
     try {
-        const user = [{id: 1, name: "put"}];
+        const {id} = req.params;
+        const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {
+            email: "email",
+            password: "pass"
+        };
+        console.log({email, password});
+        const model = await User.findOne({where: {id}});
+        const status = model.update({
+            email, password
+        });
+
+        const data = [{id, status}];
         return res.status(200).json({
             success: true,
-            data: user
+            data
         });
     } catch (error) {
         res.send(500).json({
@@ -66,9 +81,9 @@ export const updateUser = async (req: any, res: any, next: any) => {
 // @route  DELETE /api/v1/user
 export const deleteUser = async (req: any, res: any, next: any) => {
     try {
-        const { id } = req.params;
+        const {id} = req.params;
         const status = await User.destroy({where: {id}});
-        const user = [{id , name: "delete", status}];
+        const user = [{id, name: "delete", status}];
         return res.status(200).json({
             success: true,
             data: user

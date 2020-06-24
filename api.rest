@@ -23,7 +23,19 @@ Content-Type: application/json
 
 
 ###
-// Create a user
+// Delete a user
 DELETE http://localhost:6600/api/v1/users/3
 Content-Type: application/json
 
+
+###
+// Create a user
+PUT http://localhost:6600/api/v1/users/1
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "updated@user.com",
+    "password": "updated-pass"
+  }
+}
