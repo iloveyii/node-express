@@ -7,6 +7,7 @@ import compression from "compression";
 // ----------------------------------
 import list from "./routes/list";
 import user from "./routes/user";
+import login from "./routes/login";
 
 
 // ----------------------------------
@@ -28,6 +29,7 @@ app.use(express.urlencoded({extended: true}));
 // API Routes
 // ----------------------------------
 app.use("/api/v1/users", user);
+app.use("/api/v1/login", login);
 
 // ----------------------------------
 // Export app

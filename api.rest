@@ -45,3 +45,16 @@ Content-Type: application/json
     "password": "updated-pass"
   }
 }
+
+
+###
+// Login a user
+POST http://localhost:6600/api/v1/login
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "updated2@user.com",
+    "password": "updated-pass"
+  }
+}
