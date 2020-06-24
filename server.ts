@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import app from "./src/app";
 
+const session = require("express-session");
+
 
 // ----------------------------------
 // Environment setup
@@ -12,6 +14,19 @@ const {
     SESS_SECRET = "top-secret",
     SESS_LIFETIME = 1000 * 60 * 60 * 2, // 2 hrs
 } = process.env;
+
+app.use(
+    session({
+        name: SESS_NAME,
+        resave: false,
+        saveUninitialized: false,
+        secret: SESS_SECRET,
+        cookie: {
+            maxAge: SESS_LIFETIME,
+            sameSite: "none",
+            secure: false,
+        }
+    }));
 
 // ----------------------------------
 // Express server

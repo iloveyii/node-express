@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+
 const User = require("../../sequelize/src/models").User;
 
 
@@ -10,14 +12,22 @@ export const loginUser = async (req: any, res: any, next: any) => {
             email: "email",
             password: "pass"
         };
-        const model = await User.findOne({where: {email, password}});
-        console.log(model);
+        const model = await User.findOne({where: {email}});
+        let loginSuccess = false;
+
+        if (model && await bcrypt.compare(password, model.password)) {
+            if (req.session && req.session.userId) {
+                req.session.userId = model.id;
+            }
+            loginSuccess = true;
+        }
         return res.status(200).send({
-            success: model ? true : false,
+            success: loginSuccess,
             data: email,
         });
 
     } catch (error) {
+        console.log("Error at login ", error);
         res.send(500).json({
             success: false,
             error: "Server error"

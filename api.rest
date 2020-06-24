@@ -22,8 +22,8 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "new@user.com",
-    "password": "new-pass"
+    "email": "login@user.com",
+    "password": "login-pass"
   }
 }
 
@@ -54,7 +54,7 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "updated2@user.com",
-    "password": "updated-pass"
+    "email": "login@user.com",
+    "password": "login-pass"
   }
 }
