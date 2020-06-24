@@ -65,6 +65,43 @@ export const addUser = async (req: any, res: any, next: any) => {
     }
 };
 
+// @desc   Register a User - using bcrypt hashed passwords
+// @route  POST /api/v1/register
+export const addUser = async (req: any, res: any, next: any) => {
+    try {
+        const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {
+            email: "email",
+            password: "pass"
+        };
+        console.log({email, password});
+
+        // Check if email already registered
+        const model = User.findOne({where: {email, password}});
+        if(model) {
+            return res.status(201).send({
+                success: true,
+                data: email,
+                error: "Email already registered"
+            });
+        }
+
+        // Register new user
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        const user: any = await User.create({email, password});
+        console.log("API User : POST /api/v1/user");
+        return res.status(201).send({
+            success: true,
+            data: user,
+        });
+    } catch (error) {
+        res.send(500).json({
+            success: false,
+            error: "Server error"
+        });
+    }
+};
+
 
 // @desc   Update User
 // @route  PUT /api/v1/user/1
