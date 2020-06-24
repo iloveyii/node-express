@@ -19,5 +19,11 @@ microservice.
      `npm run test`
 
 ## Tips
-   * To a git repo
+   * To add a git repo
      `npm install --save iloveyii/ts-sequelize#node-express`
+   * To add a directory alias in package.json, add a root key
+```js
+"_moduleAliases": {
+    "@sequelize": "sequelize/src"
+  }
+```
