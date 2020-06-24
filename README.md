@@ -18,3 +18,6 @@ microservice.
    * Run test
      `npm run test`
 
+## Tips
+   * To a git repo
+     `npm install --save iloveyii/ts-sequelize#node-express`
