@@ -1,4 +1,6 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 const User = require("../../sequelize/src/models").User;
 
 // @desc   Get all from User
@@ -109,21 +111,39 @@ export const registerUser = async (req: any, res: any, next: any) => {
 // @route  PUT /api/v1/user/1
 export const updateUser = async (req: any, res: any, next: any) => {
     try {
-        const {id} = req.params;
-        const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {
-            email: "email",
-            password: "pass"
-        };
-        console.log({email, password});
-        const model = await User.findOne({where: {id}});
-        const status = await model.update({
-            email, password
+        const token_secret = process.env.TOKEN_SECRET || "secret";
+        jwt.verify(req.token, token_secret, async (err: any, authData: any) => {
+            if (err) {
+                res.status(403).send({
+                    success: false,
+                    error: "Access denied"
+                });
+            } else {
+                const {id} = req.params;
+                if (Number(id) !== Number(authData.id)) {
+                    return res.status(403).send({
+                        success: false,
+                        error: "Forbidden ids different " + id + " vs " + authData.id
+                    });
+                }
+                const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {
+                    email: "email",
+                    password: "pass"
+                };
+                console.log({email, password});
+                const model = await User.findOne({where: {id}});
+                const status = await model.update({
+                    email, password
+                });
+
+                return res.status(200).send({
+                    success: true,
+                    data: model
+                });
+            }
         });
 
-        return res.status(200).send({
-            success: true,
-            data: model
-        });
+
     } catch (error) {
         res.send(500).json({
             success: false,

@@ -31,12 +31,14 @@ Content-Type: application/json
 ###
 // Delete a user
 DELETE http://localhost:6600/api/v1/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoibG9naW5AdXNlci5jb20iLCJpYXQiOjE1OTMwMTk1MTV9.V5cZ6nh-fgyI2LK6hEZmF7WHnDthAsAnpAk2Jew9gMM
 Content-Type: application/json
 
 
 ###
 // Update a user
-PUT http://localhost:6600/api/v1/users/1
+PUT http://localhost:6600/api/v1/users/14
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoibG9naW5AdXNlci5jb20iLCJpYXQiOjE1OTMwMTk1MTV9.V5cZ6nh-fgyI2LK6hEZmF7WHnDthAsAnpAk2Jew9gMM
 Content-Type: application/json
 
 {
