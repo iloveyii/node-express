@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import compression from "compression";
 
-
 // ----------------------------------
 // Routes Import
 // ----------------------------------
@@ -28,8 +27,8 @@ app.use(express.urlencoded({extended: true}));
 // ----------------------------------
 // API Routes
 // ----------------------------------
-app.use("/api/v1/list", list);
-app.use("/api/v1/user", user);
+app.use("/api/v1/lists", list);
+app.use("/api/v1/users", user);
 
 // ----------------------------------
 // Export app

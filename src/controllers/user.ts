@@ -1,14 +1,21 @@
+const User = require("@sequelize/models").User;
 
 // @desc   Get all from User
 // @route  GET /api/v1/user
-export const getUser = async (req: any, res: any, next: any) => {
+export const getUser = (req: any, res: any, next: any) => {
     try {
         console.log("API User : GET /api/v1/user");
         const user = [{id: 1, name: "aaaa"}, {id: 2, name: "bbb"}];
-        return res.status(200).json({
+        /*return res.status(200).json({
             success: true,
             data: user
-        });
+        }); */
+
+        User.findAll()
+            .then((users: any[]) => {
+                res.status(200).send(users);
+            });
+
     } catch (error) {
         res.send(500).json({
             success: false,
