@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 const User = require("@sequelize/models").User;
 
 // @desc   Get all from User
@@ -67,12 +68,13 @@ export const addUser = async (req: any, res: any, next: any) => {
 
 // @desc   Register a User - using bcrypt hashed passwords
 // @route  POST /api/v1/register
-export const addUser = async (req: any, res: any, next: any) => {
+export const registerUser = async (req: any, res: any, next: any) => {
     try {
         const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {
             email: "email",
             password: "pass"
         };
+        console.log("API User : POST /api/v1/register");
         console.log({email, password});
 
         // Check if email already registered
@@ -87,9 +89,8 @@ export const addUser = async (req: any, res: any, next: any) => {
 
         // Register new user
         const hashedPassword = await bcrypt.hash(password, 10)
+        const user: any = await User.create({email, password:hashedPassword});
 
-        const user: any = await User.create({email, password});
-        console.log("API User : POST /api/v1/user");
         return res.status(201).send({
             success: true,
             data: user,
