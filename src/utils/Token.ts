@@ -42,7 +42,7 @@ class Token {
             case STATUS.mismatch_id:
                 info = {
                     status: STATUS.mismatch_id,
-                    message: "The id in token and the id in query parameter are mismatched"
+                    message: "The id in token and the id in query parameter mismatched"
                 };
                 break;
             case STATUS.forbidden:

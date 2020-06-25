@@ -149,9 +149,22 @@ export const updateUser2 = async (req: any, res: any, next: any) => {
     }
 };
 
+
 // @desc   Delete User
 // @route  DELETE /api/v1/user
 export const deleteUser = async (req: any, res: any, next: any) => {
+    const model = new Model(req);
+    await model.delete();
+
+    return res.status(200).send({
+        success: model.success,
+        data: model.data
+    });
+};
+
+// @desc   Delete User
+// @route  DELETE /api/v1/user
+export const deleteUser2 = async (req: any, res: any, next: any) => {
     try {
         const {id} = req.params;
         const status = await User.destroy({where: {id}});

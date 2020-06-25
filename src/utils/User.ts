@@ -33,10 +33,16 @@ interface UserI {
 
 class User implements UserI {
     isNewRecord: boolean = true;
+    id: number = 0;
+    // for response
     success: boolean = true;
     data: any = undefined;
 
-    constructor(private user: any) {
+
+    constructor(private req: any) {
+        if (req.params && req.params.id) {
+            this.id = req.params.id;
+        }
     }
 
     login() {
@@ -60,16 +66,16 @@ class User implements UserI {
     }
 
     async update() {
-        const user: UserT = {email: this.user.body.user.email, password: this.user.body.user.password};
-        const model = await Model.findOne({where: {id: this.user.params.id}});
+        const user: UserT = {email: this.req.body.user.email, password: this.req.body.user.password};
+        const model = await Model.findOne({where: {id: this.req.params.id}});
         // Verify if same id user
-        const status = await Token.isVerified(this.user) && model && await model.update({...user});
+        const status = await Token.isVerified(this.req) && model && await model.update({...user});
         if (status) {
             this.success = true;
             this.data = model.dataValues;
         } else {
             this.success = false;
-            this.data = await Token.info(this.user);
+            this.data = await Token.info(this.req);
         }
     }
 
@@ -81,20 +87,19 @@ class User implements UserI {
         return this.data;
     }
 
-    delete(id: number) {
-        return Model.destroy({where: {id}});
-    }
-
-    async verify() {
-        const token_secret = process.env.TOKEN_SECRET || "secret";
-        try {
-            const authData: any = await jwt.verify(this.user.token, token_secret);
-            if (Number(this.user.params.id) !== Number(authData.id)) {
-                return 403;
+    async delete() {
+        if (await Token.isVerified(this.req)) {
+            const status = await Model.destroy({where: {id: this.id}});
+            if (status > 0) {
+                this.success = true;
+                this.data = `User with id ${this.id} is deleted`;
+            } else {
+                this.success = false;
+                this.data = `User with id ${this.id} does not exist`;
             }
-            return 1;
-        } catch (e) {
-            return 0;
+        } else {
+            this.success = false;
+            this.data = await Token.info(this.req);
         }
     }
 

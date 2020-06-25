@@ -23,29 +23,29 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "login@user.com",
-    "password": "login-pass"
+    "email": "login1@user.com",
+    "password": "login1-pass"
   }
 }
 
 
 ###
 // Delete a user
-DELETE http://localhost:6600/api/v1/users/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoibG9naW5AdXNlci5jb20iLCJpYXQiOjE1OTMwMTk1MTV9.V5cZ6nh-fgyI2LK6hEZmF7WHnDthAsAnpAk2Jew9gMM
+DELETE http://localhost:6600/api/v1/users/13
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoibG9naW4xQHVzZXIuY29tIiwiaWF0IjoxNTkzMDg3MjgzfQ.tN4pfedzYindtGwmusESMzQtI2kFMefE0qRmKt21DQ8
 Content-Type: application/json
 
 
 ###
 // Update a user
-PUT http://localhost:6600/api/v1/users/7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJsb2dpbkB1c2VyLmNvbSIsImlhdCI6MTU5MzA3MzAwN30.CK8VUyftvfrfmiQ7LQ95A2WrqYgxFngxlzMEhM0m6IA
+PUT http://localhost:6600/api/v1/users/10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoibG9naW4xQHVzZXIuY29tIiwiaWF0IjoxNTkzMDg1NjMwfQ.aEshEMmlGUdxuTyec2A4vK55RWG1_ICLJ0sTqsQo2sw
 Content-Type: application/json
 
 {
   "user": {
-    "email": "login@user.com",
-    "password": "login-pass"
+    "email": "login1@user.com",
+    "password": "login1-pass"
   }
 }
 
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "login@user.com",
-    "password": "login-pass"
+    "email": "login1@user.com",
+    "password": "login1-pass"
   }
 }
