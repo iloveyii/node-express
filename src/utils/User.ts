@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+import Verify from "./Token";
+import Token from "./Token";
 
 const Model = require("../../sequelize/src/models").User;
 
@@ -61,14 +63,13 @@ class User implements UserI {
         const user: UserT = {email: this.user.body.user.email, password: this.user.body.user.password};
         const model = await Model.findOne({where: {id: this.user.params.id}});
         // Verify if same id user
-        const verified = await this.verify();
-        const status = verified === 1 && model && await model.update({...user});
+        const status = await Token.isVerified(this.user) && model && await model.update({...user});
         if (status) {
             this.success = true;
             this.data = model.dataValues;
         } else {
             this.success = false;
-            this.data = "Some error occurred";
+            this.data = await Token.info(this.user);
         }
     }
 
