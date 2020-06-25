@@ -10,10 +10,9 @@ type UserT = {
     password: string;
 };
 
-type StatusT = {
-    user: UserT | UserT[],
-    users?: any[],
+export type ResponseT = {
     success: boolean
+    data: any,
 };
 
 interface UserI {
@@ -43,12 +42,11 @@ class User implements UserI {
         this.user = req.body.user ? req.body.user : {email: "", password: ""};
     }
 
-    get Success() {
-        return this.success;
-    }
-
-    get Data() {
-        return this.data;
+    get response(): ResponseT {
+        return {
+            success: this.success,
+            data: this.data
+        };
     }
 
     async login() {
@@ -122,7 +120,6 @@ class User implements UserI {
             this.data = await Token.info(this.req);
         }
     }
-
 }
 
 export default User;

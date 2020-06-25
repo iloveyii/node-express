@@ -30,10 +30,7 @@ export const createUser = async (req: any, res: any, next: any) => {
     const model = new User(req);
     await model.create();
 
-    return res.status(200).send({
-        success: model.success,
-        data: model.data
-    });
+    return res.status(200).send(model.response);
 };
 
 // @desc   Update a User
@@ -42,10 +39,7 @@ export const updateUser = async (req: any, res: any, next: any) => {
     const model = new User(req);
     await model.update();
 
-    return res.status(200).send({
-        success: model.success,
-        data: model.data
-    });
+    return res.status(200).send(model.response);
 };
 
 // @desc   Delete User
@@ -54,8 +48,5 @@ export const deleteUser = async (req: any, res: any, next: any) => {
     const model = new User(req);
     await model.delete();
 
-    return res.status(200).send({
-        success: model.success,
-        data: model.data
-    });
+    return res.status(200).send(model.response);
 };
