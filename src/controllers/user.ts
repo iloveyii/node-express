@@ -12,13 +12,11 @@ const model = new Model({email: "", password: ""});
 export const getUsers = async (req: any, res: any, next: any) => {
     try {
         console.log("API User : GET /api/v1/user");
-        const user = [{id: 1, name: "aaaa"}, {id: 2, name: "bbb"}];
-        const users = await model.readAll();
+        const users = await Model.read();
         return res.status(200).send({
             success: true,
             data: users
         });
-
     } catch (error) {
         res.send(500).json({
             success: false,
@@ -35,7 +33,7 @@ export const getUser = async (req: any, res: any, next: any) => {
         console.log("API User : GET /api/v1/user/:id");
         const {id} = req.params;
         let error = undefined;
-        let user = await model.readOne(id);
+        let user = await Model.read({where: {id}});
         if (user && (id != user.id)) {
             error = `IDs are different ${id} vs ${user.id}`;
             user = undefined;

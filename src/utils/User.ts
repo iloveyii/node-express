@@ -21,10 +21,6 @@ interface UserI {
 
     create(user: UserT): any;
 
-    readOne(id: number): any;
-
-    readAll(): any;
-
     update(): any;
 
     delete(id: number): any;
@@ -45,6 +41,14 @@ class User implements UserI {
         }
     }
 
+    get Success() {
+        return this.success;
+    }
+
+    get Data() {
+        return this.data;
+    }
+
     login() {
 
     }
@@ -53,15 +57,15 @@ class User implements UserI {
 
     }
 
+    // CRUD
     async create(user: UserT) {
         return await Model.create({...user});
     }
 
-    async readOne(id: number) {
-        return await Model.findOne({where: {id}});
-    }
-
-    async readAll() {
+    public static async read(condition: any = undefined) {
+        if (condition) {
+            return await Model.findOne({where: condition.where});
+        }
         return await Model.findAll();
     }
 
@@ -77,14 +81,6 @@ class User implements UserI {
             this.success = false;
             this.data = await Token.info(this.req);
         }
-    }
-
-    get Success() {
-        return this.success;
-    }
-
-    get Data() {
-        return this.data;
     }
 
     async delete() {
