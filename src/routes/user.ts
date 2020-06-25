@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, getUsers, registerUser, updateUser, deleteUser } from "../controllers/user";
+import { getUser, getUsers, createUser, updateUser, deleteUser } from "../controllers/user";
 import { authenticate_user } from "../utils/authenticate_user";
 
 const router = express.Router();
@@ -11,6 +11,6 @@ router.route("/:id")
 
 router.route("/")
     .get(getUsers)
-    .post(registerUser);
+    .post(createUser);
 
 export default router;
