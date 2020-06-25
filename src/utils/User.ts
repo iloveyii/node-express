@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import Verify from "./Token";
 import Token from "./Token";
+import bcrypt from "bcrypt";
 
 const Model = require("../../sequelize/src/models").User;
 
@@ -19,7 +20,7 @@ type StatusT = {
 interface UserI {
     isNewRecord: boolean;
 
-    create(user: UserT): any;
+    create(): any;
 
     update(): any;
 
@@ -29,6 +30,7 @@ interface UserI {
 
 class User implements UserI {
     isNewRecord: boolean = true;
+    user: UserT | undefined = undefined;
     id: number = 0;
     // for response
     success: boolean = true;
@@ -39,6 +41,7 @@ class User implements UserI {
         if (req.params && req.params.id) {
             this.id = req.params.id;
         }
+        this.user = {email: this.req.body?.user.email, password: this.req.body?.user.password};
     }
 
     get Success() {
@@ -58,8 +61,17 @@ class User implements UserI {
     }
 
     // CRUD
-    async create(user: UserT) {
-        return await Model.create({...user});
+    async create() {
+        const model = await Model.findOne({where: {email: this.req.body.user.email}});
+        if (model) {
+            this.success = false;
+            this.data = "Email already registered";
+        } else {
+            const hashedPassword = await bcrypt.hash(this.user?.password, 10);
+            const user: any = await Model.create({email: this.user?.email, password: hashedPassword});
+            this.success = true;
+            this.data = user;
+        }
     }
 
     public static async read(condition: any = undefined) {
@@ -70,10 +82,9 @@ class User implements UserI {
     }
 
     async update() {
-        const user: UserT = {email: this.req.body.user.email, password: this.req.body.user.password};
         const model = await Model.findOne({where: {id: this.req.params.id}});
         // Verify if same id user
-        const status = await Token.isVerified(this.req) && model && await model.update({...user});
+        const status = await Token.isVerified(this.req) && model && await model.update({...this.user});
         if (status) {
             this.success = true;
             this.data = model.dataValues;
