@@ -41,7 +41,7 @@ class User implements UserI {
         if (req.params && req.params.id) {
             this.id = req.params.id;
         }
-        this.user = {email: this.req.body?.user.email, password: this.req.body?.user.password};
+        this.user = req.body.user ? req.body.user : {email: "", password: ""};
     }
 
     get Success() {
