@@ -24,7 +24,7 @@ interface UserI {
 
     update(): any;
 
-    delete(id: number): any;
+    delete(): any;
 }
 
 
