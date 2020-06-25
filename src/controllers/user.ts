@@ -4,24 +4,19 @@ import User from "../models/User";
 // @desc   Get all from User
 // @route  GET /api/v1/user
 export const getUsers = async (req: any, res: any, next: any) => {
-    const users = await User.read();
+    const model = new User(req);
+    await model.read();
 
-    return res.status(200).send({
-        success: true,
-        data: users
-    });
+    return res.status(200).send(model.response);
 };
 
 // @desc   Get a User
 // @route  GET /api/v1/user/:id
 export const getUser = async (req: any, res: any, next: any) => {
-    const {id} = req.params;
-    const user = await User.read({where: {id}});
+    const model = new User(req);
+    await model.read();
 
-    return res.status(200).send({
-        success: user ? true : false,
-        data: user
-    });
+    return res.status(200).send(model.response);
 };
 
 // @desc   Register/Create a User - using bcrypt hashed passwords

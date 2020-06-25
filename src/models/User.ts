@@ -20,6 +20,8 @@ interface UserI {
 
     create(): any;
 
+    read(): any;
+
     update(): any;
 
     delete(id: number): any;
@@ -85,17 +87,22 @@ class User implements UserI {
         }
     }
 
-    public static async read(condition: any = undefined) {
-        if (condition) {
-            return await Model.findOne({where: condition.where});
+    async read() {
+        let users;
+        if (this.id) {
+            users = await Model.findOne({where: {id: this.id}});
+        } else {
+            users = await Model.findAll();
         }
-        return await Model.findAll();
+        this.success = true;
+        this.data = users;
     }
 
     async update() {
         const model = await Model.findOne({where: {id: this.req.params.id}});
-        // Verify if same id user
-        const status = await Token.isVerified(this.req) && model && await model.update({...this.user});
+        const hashedPassword = await bcrypt.hash(this.user?.password, 10);
+        const status = model && await model.update({email: this.user?.email, password: hashedPassword});
+
         if (status) {
             this.success = true;
             this.data = model.dataValues;

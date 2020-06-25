@@ -11,8 +11,8 @@ Content-Type: application/json
 
 ###
 // Get a user
-GET http://localhost:6600/api/v1/users/16
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzEyMTIxN30.gqDw87WEaVjXywitxgEWA64X1LdtlmhiCJGL3F7zB1s
+GET http://localhost:6600/api/v1/users/17
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzEyMzA1OX0.ZM8SQt2AzEum4R9QMHktd0npsjMSAsEcD-zc3ZNkkPY
 Content-Type: application/json
 
 
@@ -38,8 +38,8 @@ Content-Type: application/json
 
 ###
 // Update a user
-PUT http://localhost:6600/api/v1/users/10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoibG9naW4xQHVzZXIuY29tIiwiaWF0IjoxNTkzMDg1NjMwfQ.aEshEMmlGUdxuTyec2A4vK55RWG1_ICLJ0sTqsQo2sw
+PUT http://localhost:6600/api/v1/users/17
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzEyMzA1OX0.ZM8SQt2AzEum4R9QMHktd0npsjMSAsEcD-zc3ZNkkPY
 Content-Type: application/json
 
 {
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "newuser@user.com",
-    "password": "newuser-pass"
+    "email": "login1@user.com",
+    "password": "login1-pass"
   }
 }
