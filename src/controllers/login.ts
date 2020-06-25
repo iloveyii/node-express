@@ -17,19 +17,20 @@ export const loginUser = async (req: any, res: any, next: any) => {
         };
         const model = await User.findOne({where: {email}});
         let loginSuccess = false;
+        let error = undefined;
 
         if (model && await bcrypt.compare(password, model.password)) {
-            if (req.session && req.session.userId) {
-                req.session.userId = model.id;
-            }
             loginSuccess = true;
             // Set jwt token in header
             const token_secret = process.env.TOKEN_SECRET || "secret";
             token = await jwt.sign({id: model.id, email}, token_secret);
+        } else {
+            error = "Incorrect email or password";
         }
         return res.status(200).send({
             success: loginSuccess,
-            data: {email, token},
+            data: {id: model.id, email, token},
+            error
         });
 
     } catch (error) {

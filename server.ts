@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import app from "./src/app";
-import User from "./src/utils/User";
 
 const session = require("express-session");
 
@@ -40,9 +39,5 @@ const server = app.listen(PORT, () => {
     );
     console.log("  Press CTRL-C to stop\n");
 });
-
-const model = new User({email: "", password: ""});
-const users = model.readAll();
-console.log(users);
 
 export default server;

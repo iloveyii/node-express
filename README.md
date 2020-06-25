@@ -27,3 +27,9 @@ microservice.
     "@sequelize": "sequelize/src"
   }
 ```
+
+
+
+## Problems and solutions
+   * bcrypt_lib.node: undefined symbol: napi_add_finalizer
+     * Use bcrypt 3.0.0

@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Model from "../utils/User";
+import { verify } from "../utils/authenticate_user";
 
 const User = require("../../sequelize/src/models").User;
+const model = new Model({email: "", password: ""});
+
 
 // @desc   Get all from User
 // @route  GET /api/v1/user
@@ -9,10 +13,10 @@ export const getUsers = async (req: any, res: any, next: any) => {
     try {
         console.log("API User : GET /api/v1/user");
         const user = [{id: 1, name: "aaaa"}, {id: 2, name: "bbb"}];
-        const models = await User.findAll();
+        const users = await model.readAll();
         return res.status(200).send({
             success: true,
-            data: models
+            data: users
         });
 
     } catch (error) {
@@ -30,11 +34,17 @@ export const getUser = async (req: any, res: any, next: any) => {
     try {
         console.log("API User : GET /api/v1/user/:id");
         const {id} = req.params;
-        const model = await User.findOne({where: {id}});
+        let error = undefined;
+        let user = await model.readOne(id);
+        if (user && (id != user.id)) {
+            error = `IDs are different ${id} vs ${user.id}`;
+            user = undefined;
+        }
 
         return res.status(200).send({
             success: true,
-            data: model,
+            data: user,
+            error
         });
 
     } catch (error) {
@@ -54,7 +64,7 @@ export const addUser = async (req: any, res: any, next: any) => {
             password: "pass"
         };
         console.log({email, password});
-        const user: any = await User.create({email, password});
+        const user = await model.create({email, password});
         console.log("API User : POST /api/v1/user");
         return res.status(201).send({
             success: true,
@@ -106,48 +116,35 @@ export const registerUser = async (req: any, res: any, next: any) => {
     }
 };
 
+export const updateUser = async (req: any, res: any, next: any) => {
+    const model = new Model(req);
+    await model.update();
+
+    return res.status(200).send({
+        success: model.success,
+        data: model.data
+    });
+};
 
 // @desc   Update User
 // @route  PUT /api/v1/user/1
-export const updateUser = async (req: any, res: any, next: any) => {
-    try {
-        const token_secret = process.env.TOKEN_SECRET || "secret";
-        jwt.verify(req.token, token_secret, async (err: any, authData: any) => {
-            if (err) {
-                res.status(403).send({
-                    success: false,
-                    error: "Access denied"
-                });
-            } else {
-                const {id} = req.params;
-                if (Number(id) !== Number(authData.id)) {
-                    return res.status(403).send({
-                        success: false,
-                        error: "Forbidden ids different " + id + " vs " + authData.id
-                    });
-                }
-                const {email, password}: { email: string, password: string } = req.body.user ? req.body.user : {
-                    email: "email",
-                    password: "pass"
-                };
-                console.log({email, password});
-                const model = await User.findOne({where: {id}});
-                const status = await model.update({
-                    email, password
-                });
+export const updateUser2 = async (req: any, res: any, next: any) => {
+    const verified = await verify(req, res, req.params.id);
 
-                return res.status(200).send({
-                    success: true,
-                    data: model
-                });
-            }
+    if (verified === 1) {
+        const model = await User.findOne({where: {id: req.params.id}});
+        const status = model && await model.update({
+            email: req.body.user.email,
+            password: req.body.user.password
         });
-
-
-    } catch (error) {
-        res.send(500).json({
+        return res.status(200).send({
+            success: status,
+            data: model.getDataValues
+        });
+    } else {
+        return res.status(403).send({
             success: false,
-            error: "Server error"
+            error: verified === 403 ? "Forbidden ids are different " : "Invalid token"
         });
     }
 };
