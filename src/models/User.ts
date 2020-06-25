@@ -3,7 +3,7 @@ import Verify from "./Token";
 import Token from "./Token";
 import bcrypt from "bcrypt";
 
-const Model = require("../../sequelize/src/models").User;
+const Model = require("../../sequelize/src/models/index").User;
 
 type UserT = {
     id?: number;

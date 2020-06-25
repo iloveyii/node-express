@@ -1,15 +1,10 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import Model from "../utils/User";
-import { verify } from "../utils/authenticate_user";
+import User from "../models/User";
 
-const User = require("../../sequelize/src/models").User;
-const model = new Model({email: "", password: ""});
 
 // @desc   Get all from User
 // @route  GET /api/v1/user
 export const getUsers = async (req: any, res: any, next: any) => {
-    const users = await Model.read();
+    const users = await User.read();
 
     return res.status(200).send({
         success: true,
@@ -21,7 +16,7 @@ export const getUsers = async (req: any, res: any, next: any) => {
 // @route  GET /api/v1/user/:id
 export const getUser = async (req: any, res: any, next: any) => {
     const {id} = req.params;
-    const user = await Model.read({where: {id}});
+    const user = await User.read({where: {id}});
 
     return res.status(200).send({
         success: user ? true : false,
@@ -32,7 +27,7 @@ export const getUser = async (req: any, res: any, next: any) => {
 // @desc   Register/Create a User - using bcrypt hashed passwords
 // @route  POST /api/v1/register
 export const createUser = async (req: any, res: any, next: any) => {
-    const model = new Model(req);
+    const model = new User(req);
     await model.create();
 
     return res.status(200).send({
@@ -44,7 +39,7 @@ export const createUser = async (req: any, res: any, next: any) => {
 // @desc   Update a User
 // @route  UPDATE /api/v1/user
 export const updateUser = async (req: any, res: any, next: any) => {
-    const model = new Model(req);
+    const model = new User(req);
     await model.update();
 
     return res.status(200).send({
@@ -56,7 +51,7 @@ export const updateUser = async (req: any, res: any, next: any) => {
 // @desc   Delete User
 // @route  DELETE /api/v1/user
 export const deleteUser = async (req: any, res: any, next: any) => {
-    const model = new Model(req);
+    const model = new User(req);
     await model.delete();
 
     return res.status(200).send({

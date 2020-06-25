@@ -11,8 +11,8 @@ Content-Type: application/json
 
 ###
 // Get a user
-GET http://localhost:6600/api/v1/users/6
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJsb2dpbkB1c2VyLmNvbSIsImlhdCI6MTU5MzA2ODc1Nn0.npJubyKAJ9-cQjtD5HqDZOHlmKPgf8PkZJycj_a_lbk
+GET http://localhost:6600/api/v1/users/14
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoibG9naW4xQHVzZXIuY29tIiwiaWF0IjoxNTkzMTE4NjQzfQ.nSomtQQev_AZg2ZvN2IOMBQ1dGcwNGrNhaF8PhrtMDI
 Content-Type: application/json
 
 
