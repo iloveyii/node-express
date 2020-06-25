@@ -1,7 +1,6 @@
-import jwt from "jsonwebtoken";
-import Verify from "./Token";
 import Token from "./Token";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const Model = require("../../sequelize/src/models/index").User;
 
@@ -52,12 +51,26 @@ class User implements UserI {
         return this.data;
     }
 
-    login() {
+    async login() {
+        const token_secret = process.env.TOKEN_SECRET || "secret";
 
-    }
+        try {
+            const model = await Model.findOne({where: {email: this.user?.email}});
 
-    authenticate() {
-
+            if (model && await bcrypt.compare(this.user?.password, model.password)) {
+                // Set jwt token in header
+                const token = await jwt.sign({id: model.id, email: model.email}, token_secret);
+                this.success = true;
+                this.data = {id: model.id, email: model.email, token};
+            } else {
+                this.success = false;
+                this.data = "Incorrect email or password";
+            }
+        } catch (error) {
+            console.log("Error at login ", error);
+            this.success = false;
+            this.data = "Server error";
+        }
     }
 
     // CRUD
