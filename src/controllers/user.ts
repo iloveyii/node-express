@@ -20,24 +20,16 @@ export const getUsers = async (req: any, res: any, next: any) => {
 // @desc   Get a User
 // @route  GET /api/v1/user/:id
 export const getUser = async (req: any, res: any, next: any) => {
-    try {
-        const {id} = req.params;
-        const user = await Model.read({where: {id}});
+    const {id} = req.params;
+    const user = await Model.read({where: {id}});
 
-        return res.status(200).send({
-            success: user ? true : false,
-            data: user
-        });
-
-    } catch (error) {
-        res.send(500).json({
-            success: false,
-            error: "Server error"
-        });
-    }
+    return res.status(200).send({
+        success: user ? true : false,
+        data: user
+    });
 };
 
-// @desc   Register a User - using bcrypt hashed passwords
+// @desc   Register/Create a User - using bcrypt hashed passwords
 // @route  POST /api/v1/register
 export const createUser = async (req: any, res: any, next: any) => {
     const model = new Model(req);
@@ -49,6 +41,8 @@ export const createUser = async (req: any, res: any, next: any) => {
     });
 };
 
+// @desc   Update a User
+// @route  UPDATE /api/v1/user
 export const updateUser = async (req: any, res: any, next: any) => {
     const model = new Model(req);
     await model.update();
