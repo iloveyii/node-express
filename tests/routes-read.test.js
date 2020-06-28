@@ -23,12 +23,34 @@ describe('/GET users', () => {
     });
 });
 
+// -------------------------------------------------------------------
+// API Routes - Get a user only when logged in token is present
+// -------------------------------------------------------------------
 
 describe('/GET a user with id', () => {
+    let id = 0;
     let token = null;
+
+    const user = {
+        "email": "read-test-user1@email.com",
+        "password": "read-test-user1-pass"
+    };
+
+
+    it('it should create a new user to read later', async () => {
+        const res = await request(null)
+            .post('/api/v1/users')
+            .send({user})
+        expect(res.statusCode).toEqual(201)
+        expect(res.body).toHaveProperty('success')
+        expect(res.body).toHaveProperty('data')
+        expect(res.body.success).toBeTruthy();
+        id = res.body.data.id;
+    });
+
     it('it should not get the user without token', async () => {
         const res = await request(null)
-            .get('/api/v1/users/1')
+            .get(`/api/v1/users/${id}`)
             .send({})
         expect(res.statusCode).toEqual(403)
         expect(res.body).toHaveProperty('success')
@@ -39,26 +61,18 @@ describe('/GET a user with id', () => {
     it('it should get the use log in and get a token', async () => {
         const res = await request(null)
             .post('/api/v1/login')
-            .send(
-                {
-                    "user": {
-                        "email": "user1@email.com",
-                        "password": "pass1"
-                    }
-                }
-            )
-        expect(res.statusCode).toEqual(200)
+            .send({user})
         expect(res.body).toHaveProperty('success')
+        expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('data')
         expect(res.body.data).toHaveProperty('token')
         token = res.body.data.token;
-
     });
 
 
     it('it should get the user with a token', async () => {
         const res = await request(null)
-            .get('/api/v1/users/1')
+            .get(`/api/v1/users/${id}`)
             .set('Authorization', 'bearer ' + token)
             .send()
         expect(res.statusCode).toEqual(200)
