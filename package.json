@@ -14,7 +14,8 @@
     "prestart": "npx sequelize db:create --config=./sequelize/src/config/config.js",
     "serve": "cd dist && node server.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
-    "pretest": "npx sequelize db:create --config=./sequelize/src/config/config.js"
+    "pretest": "npx sequelize db:create --config=./sequelize/src/config/config.js && npm run db:reset",
+    "db:reset": "cd sequelize && npm run test"
   },
   "keywords": [
     "node",
