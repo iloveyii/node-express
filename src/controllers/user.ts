@@ -25,7 +25,7 @@ export const createUser = async (req: any, res: any, next: any) => {
     const model = new User(req);
     await model.create();
 
-    return res.status(200).send(model.response);
+    return res.status(201).send(model.response);
 };
 
 // @desc   Update a User
