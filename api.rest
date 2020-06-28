@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ###
 // Get a user
-GET http://localhost:6600/api/v1/users/17
+GET http://localhost:6600/api/v1/users/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzEyMzA1OX0.ZM8SQt2AzEum4R9QMHktd0npsjMSAsEcD-zc3ZNkkPY
 Content-Type: application/json
 
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "newuser@user.com",
-    "password": "newuser-pass"
+    "email": "user1@email.com",
+    "password": "pass1"
   }
 }

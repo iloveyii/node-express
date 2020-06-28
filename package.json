@@ -11,8 +11,10 @@
     "cp-env": "cp .env-production dist/.env -f",
     "serve-debug": "nodemon --inspect dist/server/server.js",
     "start": "npm run build-server && concurrently \"npm run serve\" ",
+    "prestart": "npx sequelize db:create --config=./sequelize/src/config/config.js",
     "serve": "cd dist && node server.js",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "pretest": "npx sequelize db:create --config=./sequelize/src/config/config.js"
   },
   "keywords": [
     "node",
