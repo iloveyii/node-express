@@ -33,3 +33,6 @@ microservice.
 ## Problems and solutions
    * bcrypt_lib.node: undefined symbol: napi_add_finalizer
      * Use bcrypt 3.0.0
+     
+   * TypeError: _gracefulFs(...).realpathSync.native is not a function
+     * Use node 10
