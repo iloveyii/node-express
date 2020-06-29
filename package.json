@@ -41,6 +41,8 @@
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.20",
     "mysql2": "^2.1.0",
     "node-tsc": "0.0.14",
     "sequelize": "^5.21.13",

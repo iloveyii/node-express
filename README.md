@@ -1,5 +1,5 @@
-Node Expresss
-======
+Node Express
+============
 This is a node and express application using Typescript. It is dockerized and can be easily used for any
 microservice.
 
@@ -17,6 +17,7 @@ microservice.
 ## Test
    * Run test
      `npm run test`
+     
 
 ## Tips
    * To add a git repo
@@ -27,7 +28,18 @@ microservice.
     "@sequelize": "sequelize/src"
   }
 ```
-
+   * Create model
+   `npm run migrate:create-model --name=Post --attributes=title:string,body:string`
+   
+   * Create migration
+    `npm run migrate:create-migration --name=create-posts-table`
+   
+   * Add command line completion to npm scripts
+   `npm completion >> ~/.bashrc`
+   `source ~/.bashrc`
+   
+   * Run all migrations
+   `npm run migrate`
 
 
 ## Problems and solutions
