@@ -15,6 +15,11 @@ type ResultT = {
     data: UserT;
 };
 
+export type ResponseT = {
+    success: boolean
+    data: any,
+};
+
 const mongo = {
     dbname: "shop",
     url: "mongodb://localhost:27017",
@@ -122,6 +127,16 @@ class Mongo implements UserI {
             model: model.deletedCount
         };
         return this;
+    }
+
+// ----------------------------------
+// Class methods
+// ----------------------------------
+    get response(): ResponseT {
+        return {
+            success: this.success,
+            data: this.data
+        };
     }
 }
 
