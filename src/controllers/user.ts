@@ -1,4 +1,5 @@
 import User from "../models/User";
+import { RequestHandler, Request, Response, NextFunction } from "express";
 
 
 // @desc   Get all from User
