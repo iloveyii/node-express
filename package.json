@@ -60,6 +60,7 @@
     "@types/express": "^4.17.6",
     "@types/express-validator": "^3.0.0",
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongodb": "^3.5.25",
     "@types/node": "^14.0.13",
     "@types/sequelize": "^4.28.9",
     "@types/validator": "^13.0.0",
