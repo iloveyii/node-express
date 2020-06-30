@@ -27,11 +27,35 @@ interface UserI {
 
     read(condition: ConditionT): any;
 
-    update(user: any): any;
+    update(condition: ConditionT, user: any): any;
 
     delete(condition: ConditionT): any;
 }
 
+
+class Database {
+    private database: any = undefined;
+
+    constructor(private dbname: string) {
+    }
+
+    async connect() {
+        if (this.database !== undefined) return this.database;
+        try {
+            const client = await MongoClient.connect(mongo.url, mongo.mongoOptions);
+            console.log("Mongodb connected to : " + this.dbname);
+            this.database = await client.db(mongo.dbname);
+        } catch (error) {
+            console.log("Error : ", error);
+        }
+        return this.database;
+    }
+
+    async db() {
+        await this.connect();
+        return this.database;
+    }
+}
 
 // --------------------------------------------------------------
 // Mongo base class - It will create any document of TypeT given
@@ -42,13 +66,10 @@ class Mongo implements UserI {
     // for response
     success: boolean = true;
     data: any = undefined;
-    // for dialect
-    collection: any = undefined;
-    static coll: any = undefined;
+    // db connection to mongo
+    db: any = undefined;
 
-    constructor(user?: UserT) {
-        this.user = user;
-        if (user) this.isNewRecord = true;
+    constructor(private database: Database, private collection: string) {
     }
 
 
@@ -56,78 +77,71 @@ class Mongo implements UserI {
 // Implement interface
 // ----------------------------------
     async create(user: UserT): Promise<any> {
-        await this.connect();
-        return;
-    }
-
-    async read(condition: ConditionT) {
-    }
-
-    async update(user: any) {
-        await this.connect();
-
-    }
-
-    async delete(condition: ConditionT) {
-        await this.connect();
-    }
-
-// ----------------------------------
-// Object methods
-// ----------------------------------
-
-    // Connect to db
-    async connect() {
-        if (this.collection !== undefined) return this.collection;
-        try {
-            const client = await MongoClient.connect(mongo.url, mongo.mongoOptions);
-            console.log("Mongodb connected to : " + mongo.dbname);
-            const db = client.db(mongo.dbname);
-            this.collection = db.collection("users");
-            Model.coll = this.collection;
-        } catch (error) {
-            console.log("Error : ", error);
-        }
-        return this.collection;
-    }
-
-    static async Find() {
-        if (Model.coll === undefined) {
-            console.log("coll is undefined");
-            const model = await new Model();
-            return await model.connect();
-        } else {
-            console.log("coll is defined");
-        }
-        return Model.coll;
-    }
-
-    async find(condition: ConditionT) {
-        await this.connect();
-        const model = await this.collection.find(condition);
-        this.data = {
-            models: model.toArray()
-        };
-        return model;
-    }
-
-    async insertOne(user: UserT) {
-        await this.connect();
-        const model = await this.collection.insertOne(user);
+        console.log("Inside create");
+        const db = await this.database.db();
+        const collection = await db.collection(this.collection);
+        const model = await collection.insertOne(user);
+        this.success = true;
         this.data = {
             model: model.ops[0]
         };
-        return model;
+        return this;
+    }
+
+    async read(condition?: ConditionT) {
+        console.log("Inside read");
+        const db = await this.database.db();
+        const collection = await db.collection(this.collection);
+        const model = await collection.find(condition?.where);
+        this.success = true;
+        this.data = {
+            model: await model.toArray()
+        };
+        return this;
+    }
+
+    async update(condition: ConditionT, user: any) {
+        console.log("Inside update");
+        const db = await this.database.db();
+        const collection = await db.collection(this.collection);
+        const model = await collection.findOneAndUpdate(condition.where, {$set: {...user}}, {returnNewDocument: true});
+        this.success = true;
+        this.data = {
+            model: model.value
+        };
+        return this;
+    }
+
+    async delete(condition: ConditionT) {
+        console.log("Inside delete");
+        const db = await this.database.db();
+        const collection = await db.collection(this.collection);
+        const model = await collection.deleteOne(condition.where);
+        this.success = true;
+        this.data = {
+            model: model.deletedCount
+        };
+        return this;
     }
 }
 
 async function test_db() {
-    console.log(" static call to Find ", await Model.Find());
+    const database = new Database("shop");
+    const user: UserT | undefined = {email: "em@il.com", password: "p@$$w0rd"};
+    const model = await new Mongo(database, "users");
+    const condition1: ConditionT = {where: {email: "em@il.com"}};
+    const condition2: ConditionT = {where: {email: "em@ilupdated.com"}};
 
-    const m = await new Model();
-    const models = await m.findAll({});
-    await m.create({email: "em2", password: "pass2"});
-    console.log(" m : ", m.data);
+    console.log("----------------CREATE------------------");
+    console.log((await model.create(user)).data.model);
+    console.log("----------------READ------------------");
+    console.log((await model.read(condition1)).data.model);
+    console.log("----------------UPDATE------------------");
+    console.log((await model.update(condition1, condition2)).data);
+    console.log("----------------DELETE------------------");
+    console.log((await model.delete(condition2)).data);
+
+
 }
 
 
