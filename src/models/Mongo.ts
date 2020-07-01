@@ -20,6 +20,7 @@ export type ResponseT = {
     data: any,
 };
 
+
 const mongo = {
     dbname: "shop",
     url: "mongodb://localhost:27017",
@@ -38,7 +39,7 @@ interface UserI {
 }
 
 
-class Database {
+export class Database {
     private database: any = undefined;
 
     constructor(private dbname: string) {
@@ -73,6 +74,10 @@ class Mongo implements UserI {
     data: any = undefined;
     // db connection to mongo
     db: any = undefined;
+    _response: ResponseT = {
+        success: true,
+        data: undefined
+    };
 
     constructor(private database: Database, private collection: string) {
     }
@@ -86,10 +91,11 @@ class Mongo implements UserI {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.insertOne(user);
-        this.success = true;
-        this.data = {
-            model: model.ops[0]
-        };
+        this.setResponse(
+            true,
+            model.ops[0]
+        );
+        console.log("Inside create");
         return this;
     }
 
@@ -98,10 +104,11 @@ class Mongo implements UserI {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.find(condition?.where);
-        this.success = true;
-        this.data = {
-            model: await model.toArray()
-        };
+        this.setResponse(
+            true,
+            await model.toArray()
+        );
+        console.log(this.data);
         return this;
     }
 
@@ -110,10 +117,10 @@ class Mongo implements UserI {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.findOneAndUpdate(condition.where, {$set: {...user}}, {returnNewDocument: true});
-        this.success = true;
-        this.data = {
-            model: model.value
-        };
+        this.setResponse(
+            true,
+            model.value
+        );
         return this;
     }
 
@@ -122,21 +129,22 @@ class Mongo implements UserI {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.deleteOne(condition.where);
-        this.success = true;
-        this.data = {
-            model: model.deletedCount
-        };
+        this.setResponse(
+            true,
+            model.deletedCount
+        );
         return this;
     }
 
-// ----------------------------------
-// Class methods
-// ----------------------------------
+    // ----------------------------------
+    // Class methods
+    // ----------------------------------
+    setResponse(success: boolean, data: any) {
+        this._response = {success, data};
+    }
+
     get response(): ResponseT {
-        return {
-            success: this.success,
-            data: this.data
-        };
+        return this._response;
     }
 }
 
@@ -160,4 +168,6 @@ async function test_db() {
 }
 
 
-test_db();
+// test_db();
+
+export default Mongo;
