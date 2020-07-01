@@ -12,6 +12,7 @@
     "serve-debug": "nodemon --inspect dist/server/server.js",
     "build": "npm run build-server && concurrently \"npm run serve\" ",
     "start": "ts-node server.ts",
+    "dev": "nodemon server.ts",
     "prestart": "npx sequelize db:create --config=./sequelize/src/config/config.js",
     "serve": "cd dist && node server.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
@@ -70,6 +71,7 @@
     "cross-env": "^7.0.2",
     "jest": "^26.1.0",
     "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
     "sequelize-cli": "^5.5.1",
     "supertest": "^4.0.2",
     "typescript": "^3.9.5"

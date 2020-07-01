@@ -1,6 +1,7 @@
 import Token from "./Token";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Mongo, { Condition, Database } from "./Mongo";
 
 const Model = require("../../sequelize/src/models/index").User;
 
@@ -28,13 +29,20 @@ interface UserI {
 }
 
 
+// @todo make it general Model between controller and specific model
+
 class User implements UserI {
+    model: any = undefined;
     isNewRecord: boolean = true;
     user: UserT | undefined = undefined;
     id: number = 0;
     // for response
     success: boolean = true;
     data: any = undefined;
+    _response: ResponseT = {
+        success: true,
+        data: undefined
+    };
 
 
     constructor(private req: any) {
@@ -42,13 +50,10 @@ class User implements UserI {
             this.id = req.params.id;
         }
         this.user = req.body.user ? req.body.user : {email: "", password: ""};
-    }
-
-    get response(): ResponseT {
-        return {
-            success: this.success,
-            data: this.data
-        };
+        if (process.env.DB_DIALECT === "mongodb" || true) {
+            const database = new Database("shop");
+            this.model = new Mongo(database, "users");
+        }
     }
 
     async login() {
@@ -75,41 +80,36 @@ class User implements UserI {
 
     // CRUD
     async create() {
-        const model = await Model.findOne({where: {email: this.req.body.user.email}});
-        if (model) {
-            this.success = false;
-            this.data = "Email already registered";
+        const model = await this.model.read({where: {email: this.req.body.user.email}});
+        if (model.data.model.length > 0) {
+            this.setResponse(false, "Email already registered");
         } else {
             const hashedPassword = await bcrypt.hash(this.user?.password, 10);
-            const user: any = await Model.create({email: this.user?.email, password: hashedPassword});
-            this.success = true;
-            this.data = user;
+            const user: any = await this.model.create({email: this.user?.email, password: hashedPassword});
+            this._response = model.response;
         }
+        return this;
     }
 
     async read() {
-        let users;
+        let model;
         if (this.id) {
-            users = await Model.findOne({where: {id: this.id}});
+            model = await this.model.read({where: {id: this.id}});
         } else {
-            users = await Model.findAll();
+            model = await this.model.read();
         }
-        this.success = true;
-        this.data = users;
+        this._response = model.response;
+        return this;
     }
 
     async update() {
-        const model = await Model.findOne({where: {id: this.req.params.id}});
+        const condition = {where: {id: this.req.params.id}};
+        const c = new Condition("mongodb", condition);
         const hashedPassword = await bcrypt.hash(this.user?.password, 10);
-        const status = model && await model.update({email: this.user?.email, password: hashedPassword});
+        const model = await this.model.update(c.get, {email: this.user?.email, password: hashedPassword});
 
-        if (status) {
-            this.success = true;
-            this.data = model.dataValues;
-        } else {
-            this.success = false;
-            this.data = await Token.info(this.req);
-        }
+        this._response = model.response;
+        return this;
     }
 
     async delete() {
@@ -126,6 +126,17 @@ class User implements UserI {
             this.success = false;
             this.data = await Token.info(this.req);
         }
+    }
+
+    // ----------------------------------
+    // Class methods
+    // ----------------------------------
+    setResponse(success: boolean, data: any) {
+        this._response = {success, data};
+    }
+
+    get response(): ResponseT {
+        return this._response;
     }
 }
 

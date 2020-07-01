@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 type ConditionT = {
     where?: any;
@@ -36,6 +36,22 @@ interface UserI {
     update(condition: ConditionT, user: any): any;
 
     delete(condition: ConditionT): any;
+}
+
+export class Condition {
+    constructor(private dialect: string, private readonly condition: ConditionT) {
+        if (dialect === "mongodb") {
+            if (condition.where.id) {
+                condition.where["_id"] = new ObjectId(condition.where.id);
+                delete condition.where.id;
+            }
+        }
+        this.condition = condition;
+    }
+
+    get get() {
+        return this.condition;
+    }
 }
 
 
@@ -171,3 +187,8 @@ async function test_db() {
 // test_db();
 
 export default Mongo;
+
+// const condition1: ConditionT = {where: {id: "5efbb5673ea71053ac4fc6ba", email: "em@il.com"}};
+//
+// const c = new Condition("mongodb", condition1);
+// console.log(c.get);

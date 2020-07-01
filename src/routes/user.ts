@@ -7,9 +7,9 @@ import { same_user_id } from "../middlewares/same_user_id";
 const router = express.Router();
 
 router.route("/:id")
-    .get([authenticate_user, same_user_id], getUser)
+    .get([authenticate_user], getUser)
     .delete([authenticate_user, same_user_id], deleteUser)
-    .put([authenticate_user, same_user_id], updateUser);
+    .put([authenticate_user], updateUser);
 
 router.route("/")
     .get(getUsers)
