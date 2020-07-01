@@ -1,37 +1,18 @@
-import Token from "./Token";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import Mongo, { Condition, Database } from "./Mongo";
+import Mongo  from "./Mongo";
+import { ResponseT, UserT } from "../types";
+import { Database } from "./base/Database";
+import Condition from "./base/Condition";
+import { CUserI } from "../interfaces";
+
 
 const Model = require("../../sequelize/src/models/index").User;
 
-type UserT = {
-    id?: number;
-    email: string;
-    password: string;
-};
-
-export type ResponseT = {
-    success: boolean
-    data: any,
-};
-
-interface UserI {
-    isNewRecord: boolean;
-
-    create(): any;
-
-    read(): any;
-
-    update(): any;
-
-    delete(): any;
-}
-
-
-// @todo make it general Model between controller and specific model
-
-class User implements UserI {
+// -------------------------------------------------------------
+// Make it a general Model between controller and specific model
+// -------------------------------------------------------------
+class User implements CUserI {
     model: any = undefined;
     isNewRecord: boolean = true;
     user: UserT | undefined = undefined;
@@ -43,7 +24,6 @@ class User implements UserI {
         success: true,
         data: undefined
     };
-
 
     constructor(private req: any) {
         if (req.params && req.params.id) {
@@ -94,7 +74,8 @@ class User implements UserI {
     async read() {
         let model;
         if (this.id) {
-            model = await this.model.read({where: {id: this.id}});
+            const c = new Condition("mongodb", {where: {id: this.id}});
+            model = await this.model.read(c);
         } else {
             model = await this.model.read();
         }
@@ -106,7 +87,7 @@ class User implements UserI {
         const condition = {where: {id: this.req.params.id}};
         const c = new Condition("mongodb", condition);
         const hashedPassword = await bcrypt.hash(this.user?.password, 10);
-        const model = await this.model.update(c.get, {email: this.user?.email, password: hashedPassword});
+        const model = await this.model.update(c, {email: this.user?.email, password: hashedPassword});
 
         this._response = model.response;
         return this;
@@ -116,7 +97,7 @@ class User implements UserI {
 
         const condition = {where: {id: this.id}};
         const c = new Condition("mongodb", condition);
-        const model = await this.model.delete(c.get);
+        const model = await this.model.delete(c);
 
         this._response = model.response;
         return this;

@@ -1,83 +1,8 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { ResponseT, UserT } from "../types";
+import { ConditionI, UserI } from "../interfaces";
+import { Database } from "./base/Database";
+import Condition from "./base/Condition";
 
-type ConditionT = {
-    where?: any;
-};
-
-type UserT = {
-    id?: string | number;
-    email: string;
-    password: string
-};
-
-type ResultT = {
-    success: boolean;
-    data: UserT;
-};
-
-export type ResponseT = {
-    success: boolean
-    data: any,
-};
-
-
-const mongo = {
-    dbname: "shop",
-    url: "mongodb://localhost:27017",
-    mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
-};
-
-interface UserI {
-
-    create(user: UserT): Promise<any>;
-
-    read(condition: ConditionT): any;
-
-    update(condition: ConditionT, user: any): any;
-
-    delete(condition: ConditionT): any;
-}
-
-export class Condition {
-    constructor(private dialect: string, private readonly condition: ConditionT) {
-        if (dialect === "mongodb") {
-            if (condition.where.id) {
-                condition.where["_id"] = new ObjectId(condition.where.id);
-                delete condition.where.id;
-            }
-        }
-        this.condition = condition;
-    }
-
-    get get() {
-        return this.condition;
-    }
-}
-
-
-export class Database {
-    private database: any = undefined;
-
-    constructor(private dbname: string) {
-    }
-
-    async connect() {
-        if (this.database !== undefined) return this.database;
-        try {
-            const client = await MongoClient.connect(mongo.url, mongo.mongoOptions);
-            console.log("Mongodb connected to : " + this.dbname);
-            this.database = await client.db(mongo.dbname);
-        } catch (error) {
-            console.log("Error : ", error);
-        }
-        return this.database;
-    }
-
-    async db() {
-        await this.connect();
-        return this.database;
-    }
-}
 
 // --------------------------------------------------------------
 // Mongo base class - It will create any document of TypeT given
@@ -99,9 +24,9 @@ class Mongo implements UserI {
     }
 
 
-// ----------------------------------
-// Implement interface
-// ----------------------------------
+    // ----------------------------------
+    // Implement interface
+    // ----------------------------------
     async create(user: UserT): Promise<any> {
         console.log("Inside create");
         const db = await this.database.db();
@@ -115,7 +40,7 @@ class Mongo implements UserI {
         return this;
     }
 
-    async read(condition?: ConditionT) {
+    async read(condition?: ConditionI) {
         console.log("Inside read");
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
@@ -128,11 +53,11 @@ class Mongo implements UserI {
         return this;
     }
 
-    async update(condition: ConditionT, user: any) {
+    async update(condition: ConditionI, user: any) {
         console.log("Inside update");
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
-        const model = await collection.findOneAndUpdate(condition.where, {$set: {...user}}, {returnNewDocument: true});
+        const model = await collection.findOneAndUpdate(condition?.where, {$set: {...user}}, {returnNewDocument: true});
         this.setResponse(
             true,
             model.value
@@ -140,11 +65,11 @@ class Mongo implements UserI {
         return this;
     }
 
-    async delete(condition: ConditionT) {
+    async delete(condition: ConditionI) {
         console.log("Inside delete");
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
-        const model = await collection.deleteOne(condition.where);
+        const model = await collection.deleteOne(condition?.where);
         this.setResponse(
             true,
             model.deletedCount
@@ -168,8 +93,8 @@ async function test_db() {
     const database = new Database("shop");
     const user: UserT | undefined = {email: "em@il.com", password: "p@$$w0rd"};
     const model = await new Mongo(database, "users");
-    const condition1: ConditionT = {where: {email: "em@il.com"}};
-    const condition2: ConditionT = {where: {email: "em@ilupdated.com"}};
+    const condition1: ConditionI = new Condition("mongodb", {where: {email: "em@il.com"}});
+    const condition2: ConditionI = new Condition("mongodb", {where: {email: "em@ilupdated.com"}});
 
     console.log("----------------CREATE------------------");
     console.log((await model.create(user)).data.model);
@@ -179,8 +104,6 @@ async function test_db() {
     console.log((await model.update(condition1, condition2)).data);
     console.log("----------------DELETE------------------");
     console.log((await model.delete(condition2)).data);
-
-
 }
 
 
