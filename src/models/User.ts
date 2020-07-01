@@ -113,19 +113,13 @@ class User implements UserI {
     }
 
     async delete() {
-        if (await Token.isVerified(this.req)) {
-            const status = await Model.destroy({where: {id: this.id}});
-            if (status > 0) {
-                this.success = true;
-                this.data = `User with id ${this.id} is deleted`;
-            } else {
-                this.success = false;
-                this.data = `User with id ${this.id} does not exist`;
-            }
-        } else {
-            this.success = false;
-            this.data = await Token.info(this.req);
-        }
+
+        const condition = {where: {id: this.id}};
+        const c = new Condition("mongodb", condition);
+        const model = await this.model.delete(c.get);
+
+        this._response = model.response;
+        return this;
     }
 
     // ----------------------------------

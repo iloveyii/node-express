@@ -31,7 +31,7 @@ Content-Type: application/json
 
 ###
 // Delete a user
-DELETE http://localhost:6600/api/v1/users/1
+DELETE http://localhost:6600/api/v1/users/5efbb5673ea71053ac4fc6ba
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c2VyMUBlbWFpbC5jb20iLCJpYXQiOjE1OTMzNTA3NTd9.nTQQd8J9GBCndQY8wscGJzxZ1xHrunjqN5gUarlkdKU
 Content-Type: application/json
 

@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.route("/:id")
     .get([authenticate_user], getUser)
-    .delete([authenticate_user, same_user_id], deleteUser)
+    .delete([authenticate_user], deleteUser)
     .put([authenticate_user], updateUser);
 
 router.route("/")
