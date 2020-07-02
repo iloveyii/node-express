@@ -7,25 +7,25 @@ const mongo = {
 };
 
 export class Database {
-    private database: any = undefined;
+    static database: any = undefined;
 
     constructor(private dbname: string) {
     }
 
     async connect() {
-        if (this.database !== undefined) return this.database;
+        if (Database.database !== undefined) return Database.database;
         try {
             const client = await MongoClient.connect(mongo.url, mongo.mongoOptions);
             console.log("Mongodb connected to : " + this.dbname);
-            this.database = await client.db(this.dbname);
+            Database.database = await client.db(this.dbname);
         } catch (error) {
             console.log("Error : ", error);
         }
-        return this.database;
+        return Database.database;
     }
 
     async db() {
         await this.connect();
-        return this.database;
+        return Database.database;
     }
 }

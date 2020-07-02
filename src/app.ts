@@ -8,13 +8,22 @@ import bodyParser from "body-parser";
 // ----------------------------------
 import user from "./routes/user";
 import login from "./routes/login";
+import { Database } from "./models/base/Database";
+import Mongo from "./models/Mongo";
+import Sequelize from "./models/Sequelize";
 
 
 // ----------------------------------
 // Connect to DB
 // ----------------------------------
-// const connectDB = require("./config/db");
-// connectDB();
+const dialect = "mongodb"; // process.env.DB_DIALECT || "mongodb";
+
+if (dialect === "mongodb") {
+    const database = new Database("shop");
+    new Mongo(database, "users");
+    console.log("Connected to MongoDB shop");
+}
+
 
 // ----------------------------------
 // Express configuration
