@@ -27,6 +27,7 @@ describe('/UPDATE a user with id', () => {
         expect(res.statusCode).toEqual(201)
         expect(res.body).toHaveProperty('success')
         expect(res.body).toHaveProperty('data')
+        console.log(res.body);
         expect(res.body.success).toBeTruthy();
         id = res.body.data[0].id;
     });

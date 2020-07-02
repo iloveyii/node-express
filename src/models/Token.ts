@@ -11,7 +11,7 @@ class Token {
     static async verify(req: any, auth_data: boolean = false) {
         const token_secret = process.env.TOKEN_SECRET || "secret";
         const {id} = req.params;
-        let status: 1 | 2 | 3 = STATUS.forbidden;
+        let status: 1 | 2  = STATUS.forbidden;
         let authData: any = undefined;
         try {
             authData = await jwt.verify(req.token, token_secret);

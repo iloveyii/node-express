@@ -11,8 +11,8 @@ Content-Type: application/json
 
 ###
 // Get a user
-GET http://localhost:6600/api/v1/users/14
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoibmV3dXNlcjk5QHVzZXIuY29tIiwiaWF0IjoxNTkzNjk3NTE3fQ.upl70WnxGKp0reo18yNy-NLkHOoHENjHLLvFnWnYGgM
+GET http://localhost:6600/api/v1/users/5efe2ecd64f5ab543dff8350
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUyZWNkNjRmNWFiNTQzZGZmODM1MCIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzcxNzE4MX0.vnUV3gKdJsj5B2xoxqPgHnzJHUBm-MGuX4yJbzDJQa8
 Content-Type: application/json
 
 
@@ -31,15 +31,15 @@ Content-Type: application/json
 
 ###
 // Delete a user
-DELETE http://localhost:6600/api/v1/users/14
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoibmV3dXNlcjk5QHVzZXIuY29tIiwiaWF0IjoxNTkzNjk3NTE3fQ.upl70WnxGKp0reo18yNy-NLkHOoHENjHLLvFnWnYGgM
+DELETE http://localhost:6600/api/v1/users/5efe2ecd64f5ab543dff8350
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUyZWNkNjRmNWFiNTQzZGZmODM1MCIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzcxNzE4MX0.vnUV3gKdJsj5B2xoxqPgHnzJHUBm-MGuX4yJbzDJQa8
 Content-Type: application/json
 
 
 ###
 // Update a user
-PUT http://localhost:6600/api/v1/users/5efbb5673ea71053ac4fc6ba
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzEyMzA1OX0.ZM8SQt2AzEum4R9QMHktd0npsjMSAsEcD-zc3ZNkkPY
+PUT http://localhost:6600/api/v1/users/5efe2ecd64f5ab543dff8350
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUyZWNkNjRmNWFiNTQzZGZmODM1MCIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzcxNzE4MX0.vnUV3gKdJsj5B2xoxqPgHnzJHUBm-MGuX4yJbzDJQa8
 Content-Type: application/json
 
 {
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "newuser@user.com",
-    "password": "newuser-pass"
+    "email": "delete-test-user@email.com",
+    "password": "delete-test-user-pass"
   }
 }

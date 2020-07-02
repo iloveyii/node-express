@@ -2,7 +2,6 @@ import { MongoClient, ObjectId } from "mongodb";
 
 
 const mongo = {
-    dbname: "shop",
     url: "mongodb://localhost:27017",
     mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
 };
@@ -18,7 +17,7 @@ export class Database {
         try {
             const client = await MongoClient.connect(mongo.url, mongo.mongoOptions);
             console.log("Mongodb connected to : " + this.dbname);
-            this.database = await client.db(mongo.dbname);
+            this.database = await client.db(this.dbname);
         } catch (error) {
             console.log("Error : ", error);
         }

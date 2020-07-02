@@ -45,11 +45,20 @@ class Mongo implements UserI {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.find(condition?.where);
-        this.setResponse(
-            true,
-            await model.toArray()
-        );
-        console.log(this.data);
+        const arr = await model.toArray();
+        console.log("inside Mongo read ", arr);
+        if (arr.length > 0) {
+            this.setResponse(
+                true,
+                arr
+            );
+        } else {
+            this.setResponse(
+                false,
+                ["No record found with condition " + JSON.stringify(condition?.where)]
+            );
+        }
+        console.log("Inside mongo " + this.response);
         return this;
     }
 
@@ -70,18 +79,45 @@ class Mongo implements UserI {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.deleteOne(condition?.where);
-        this.setResponse(
-            true,
-            model.deletedCount
-        );
+        console.log("delete", model.deletedCount);
+        if (model.deletedCount > 0) {
+            this.setResponse(
+                true,
+                "Deleted record with condition " + JSON.stringify(condition.where)
+            );
+        } else {
+            this.setResponse(
+                false,
+                "Cannot delete record with condition " + JSON.stringify(condition.where)
+            );
+        }
         return this;
+    }
+
+    async deleteMany(condition: ConditionI) {
+        const db = await this.database.db();
+        const collection = await db.collection(this.collection);
+        const model = await collection.deleteMany(condition?.where);
+        console.log("deleted : ", model.deletedCount);
     }
 
     // ----------------------------------
     // Class methods
     // ----------------------------------
     setResponse(success: boolean, data: any) {
-        this._response = {success, data};
+        // add id from _id
+        console.log("data", data);
+        let newData = [];
+        if (success === true) {
+            if (!Array.isArray(data)) data = [data];
+            newData = data.map((d: any) => {
+                if (d._id) {
+                    d["id"] = d._id;
+                }
+                return d;
+            });
+        }
+        this._response = {success, data: newData};
     }
 
     get response(): ResponseT {

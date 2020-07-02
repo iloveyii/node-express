@@ -29,12 +29,13 @@ class User implements CUserI {
             this.id = req.params.id;
         }
         this.user = req.body.user ? req.body.user : {email: "", password: ""};
-        if (dialect === "mongodb" || true) {
+        if (dialect === "mongodb") {
             const database = new Database("shop");
             this.model = new Mongo(database, "users");
+            console.log("Connected to MongoDB shop");
         }
         if (["mysql", "postgres", "mssql"].includes(dialect)) {
-            const database = new Database("shop");
+            console.log("Connected to Sequelize");
             this.model = new Sequelize();
         }
     }
@@ -42,14 +43,13 @@ class User implements CUserI {
     async login(token_secret: string) {
         try {
             const c = new Condition(this.dialect, {where: {email: this.user?.email}});
-            const model = await Model.findOne({where: {email: this.user?.email}});
-            const model2 = await this.model.read(c);
-            console.log("model 2", model2.response);
-
-            if (model2.response.success && await bcrypt.compare(this.user?.password, model2.response.data[0].password)) {
+            const model = await this.model.read(c);
+            console.log("Inside login", model.response);
+            const user = model.response.data[0];
+            if (model.response.success && await bcrypt.compare(this.user?.password, user.password)) {
                 // Set jwt token in header
-                const token = await jwt.sign({id: model.id, email: model.email}, token_secret);
-                this.setResponse(true, {id: model.id, email: model.email, token});
+                const token = await jwt.sign({id: user.id, email: user.email}, token_secret);
+                this.setResponse(true, {id: user.id, email: user.email, token});
             } else {
                 this.setResponse(false, "Incorrect email or password");
             }
@@ -78,7 +78,7 @@ class User implements CUserI {
     async read() {
         let model;
         if (this.id) {
-            console.log("findone", this.id);
+            console.log("find one", this.id);
             const c = new Condition(this.dialect, {where: {id: this.id}});
             model = await this.model.read(c);
         } else {

@@ -2,7 +2,7 @@ import User from "../models/User";
 import { RequestHandler, Request, Response, NextFunction } from "express";
 
 
-const dialect = "mysql"; // process.env.DB_DIALECT || "mongodb";
+const dialect = "mongodb"; // process.env.DB_DIALECT || "mongodb";
 const token_secret = process.env.TOKEN_SECRET || "secret";
 
 // @desc   Make a user log in

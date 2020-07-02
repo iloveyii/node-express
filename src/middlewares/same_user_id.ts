@@ -3,10 +3,14 @@ import Token, { STATUS } from "../models/Token";
 export const same_user_id = async (req: any, res: any, next: any) => {
     // Verify the token
     const {status, authData}: any = await Token.verify(req, true);
+    console.log("inside same user id ", status, authData);
 
     if (status === STATUS.verified) {
         const {id} = req.params;
-        const same = Number(id) === Number(authData.id);
+        console.log(id, authData);
+        const same = (id) == (authData.id);
+        console.log("same ?", (id), (authData.id), (id) == (authData.id));
+
         if (same) {
             next();
         } else {

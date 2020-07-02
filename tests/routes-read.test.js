@@ -19,7 +19,7 @@ describe('/GET users', () => {
         expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('success')
         expect(res.body).toHaveProperty('data')
-        expect(res.body.data.length).toBeGreaterThan(0)
+        expect(res.body.data.length).toBeGreaterThanOrEqual(0)
     });
 });
 
@@ -44,6 +44,7 @@ describe('/GET a user with id', () => {
         expect(res.statusCode).toEqual(201)
         expect(res.body).toHaveProperty('success')
         expect(res.body).toHaveProperty('data')
+        console.log('read test ', res.body)
         expect(res.body.success).toBeTruthy();
         id = res.body.data[0].id;
     });
