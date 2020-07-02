@@ -1,7 +1,7 @@
 import User from "../models/User";
 import { RequestHandler, Request, Response, NextFunction } from "express";
 
-const dialect = "mongodb"; // process.env.DB_DIALECT || "mongodb";
+const dialect = "mysql"; // process.env.DB_DIALECT || "mongodb";
 
 // @desc   Get all from User
 // @route  GET /api/v1/user
