@@ -1,37 +1,8 @@
+import { ConditionI, UserI } from "../interfaces";
+import Condition from "./base/Condition";
+import { ResponseT, UserT } from "../types";
+
 const Model = require("../../sequelize/src/models/index").User;
-
-
-type ConditionT = {
-    where?: any;
-};
-
-type UserT = {
-    id?: string | number;
-    email: string;
-    password: string
-};
-
-type ResultT = {
-    success: boolean;
-    data: UserT;
-};
-
-export type ResponseT = {
-    success: boolean
-    data: any,
-};
-
-
-interface UserI {
-
-    create(user: UserT): Promise<any>;
-
-    read(condition: ConditionT): Promise<any>;
-
-    update(condition: ConditionT, user: any): Promise<any>;
-
-    delete(condition: ConditionT): Promise<any>;
-}
 
 
 // --------------------------------------------------------------
@@ -42,10 +13,11 @@ class Sequelize implements UserI {
     // for response
     _response: ResponseT = {
         success: true,
-        data: undefined
+        data: []
     };
 
     constructor() {
+        console.log("Initialized Sequelize constructor");
     }
 
     // ----------------------------------
@@ -55,30 +27,41 @@ class Sequelize implements UserI {
         const model = await Model.create(user);
         this.setResponse(
             true,
-            model
+            model.dataValues
         );
-        console.log("Inside create");
+        console.log("Inside create", model.dataValues);
         return this;
     }
 
-    async read(condition?: ConditionT) {
-        let users;
+    async read(condition?: ConditionI): Promise<any> {
         if (condition) {
-            users = await Model.findAll();
-        } else {
-            users = await Model.findOne(condition);
-        }
-        this.setResponse(
-            true,
-            users
-        );
+            console.log("condition ", condition, condition.where);
+            const model = await Model.findOne(condition.where);
+            if (model) { // found
+                this.setResponse(
+                    true,
+                    model.dataValues
+                );
+            } else {
+                this.setResponse(
+                    false,
+                    `No record found with condition ${JSON.stringify(condition.where)}`
+                );
+            }
 
-        console.log("Inside read");
+        } else {
+            const models = await Model.findAll();
+            this.setResponse(
+                true,
+                models.map((model: any) => model.dataValues)
+            );
+        }
+        console.log("Inside read", this.response);
         return this;
     }
 
-    async update(condition: ConditionT, user: any) {
-        const model = await Model.findOne(condition);
+    async update(condition: ConditionI, user: any): Promise<any> {
+        const model = await Model.findOne(condition.where);
         const status = model && await model.update(user);
 
         if (status) {
@@ -96,8 +79,8 @@ class Sequelize implements UserI {
         return this;
     }
 
-    async delete(condition: ConditionT) {
-        const status = await Model.destroy(condition);
+    async delete(condition: ConditionI): Promise<any> {
+        const status = await Model.destroy(condition.where);
         if (status > 0) {
             this.setResponse(
                 true,
@@ -117,7 +100,7 @@ class Sequelize implements UserI {
     // Class methods
     // ----------------------------------
     setResponse(success: boolean, data: any) {
-        this._response = {success, data};
+        this._response = {success, data: Array.isArray(data) ? data : [data]};
     }
 
     get response(): ResponseT {
@@ -132,8 +115,8 @@ class Sequelize implements UserI {
 async function test_db() {
     const user: UserT | undefined = {email: "em@il.com", password: "p@$$w0rd"};
     const model = await new Sequelize();
-    const condition2: ConditionT = {where: {email: "em@ilupdated.com"}};
-    const condition1: ConditionT = {where: {email: "em@il.com"}};
+    const condition2: ConditionI = new Condition("mysql", {where: {email: "em@ilupdated.com"}});
+    const condition1: ConditionI = new Condition("mysql", {where: {email: "em@il.com"}});
 
     console.log("----------------CREATE----------------");
     console.log((await model.create(user)).response);
@@ -146,4 +129,6 @@ async function test_db() {
 }
 
 
-test_db();
+// test_db();
+
+export default Sequelize;

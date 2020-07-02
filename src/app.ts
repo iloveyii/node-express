@@ -34,7 +34,7 @@ app.use(cors());
 // ----------------------------------
 app.use("/api/v1/users", user);
 app.use("/api/v1/login", login);
-app.set("address", () => "http://localhost:6600");
+
 // ----------------------------------
 // Export app
 // ----------------------------------

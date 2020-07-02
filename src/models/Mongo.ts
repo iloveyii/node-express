@@ -17,7 +17,7 @@ class Mongo implements UserI {
     db: any = undefined;
     _response: ResponseT = {
         success: true,
-        data: undefined
+        data: []
     };
 
     constructor(private database: Database, private collection: string) {

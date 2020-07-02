@@ -15,5 +15,5 @@ export type ResultT = {
 
 export type ResponseT = {
     success: boolean
-    data: any,
+    data: any[],
 };
