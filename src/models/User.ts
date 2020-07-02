@@ -41,9 +41,12 @@ class User implements CUserI {
 
     async login(token_secret: string) {
         try {
+            const c = new Condition(this.dialect, {where: {email: this.user?.email}});
             const model = await Model.findOne({where: {email: this.user?.email}});
+            const model2 = await this.model.read(c);
+            console.log("model 2", model2.response);
 
-            if (model && await bcrypt.compare(this.user?.password, model.password)) {
+            if (model2.response.success && await bcrypt.compare(this.user?.password, model2.response.data[0].password)) {
                 // Set jwt token in header
                 const token = await jwt.sign({id: model.id, email: model.email}, token_secret);
                 this.setResponse(true, {id: model.id, email: model.email, token});
@@ -109,7 +112,7 @@ class User implements CUserI {
     // Class methods
     // ----------------------------------
     setResponse(success: boolean, data: any) {
-        this._response = {success, data};
+        this._response = {success, data: Array.isArray(data) ? data : [data]};
     }
 
     get response(): ResponseT {

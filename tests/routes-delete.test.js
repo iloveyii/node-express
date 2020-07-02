@@ -35,8 +35,8 @@ describe('/DELETE a user with id', () => {
         expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('success')
         expect(res.body).toHaveProperty('data')
-        expect(res.body.data).toHaveProperty('token')
-        token = res.body.data.token;
+        expect(res.body.data[0]).toHaveProperty('token')
+        token = res.body.data[0].token;
     });
 
 

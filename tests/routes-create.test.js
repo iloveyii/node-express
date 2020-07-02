@@ -21,7 +21,7 @@ describe('/POST users', () => {
         expect(res.body).toHaveProperty('success')
         expect(res.body.success).toBeTruthy()
         expect(res.body).toHaveProperty('data')
-        expect(res.body.data.email).toBe(user.email)
+        expect(res.body.data[0].email).toBe(user.email)
     });
 });
 

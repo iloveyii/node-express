@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "newuser99@user.com",
+    "email": "newuser@user.com",
     "password": "newuser-pass"
   }
 }
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "newuser99@user.com",
+    "email": "newuser@user.com",
     "password": "newuser-pass"
   }
 }

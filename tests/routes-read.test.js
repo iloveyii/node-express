@@ -45,7 +45,7 @@ describe('/GET a user with id', () => {
         expect(res.body).toHaveProperty('success')
         expect(res.body).toHaveProperty('data')
         expect(res.body.success).toBeTruthy();
-        id = res.body.data.id;
+        id = res.body.data[0].id;
     });
 
     it('it should not get the user without token', async () => {
@@ -65,8 +65,8 @@ describe('/GET a user with id', () => {
         expect(res.body).toHaveProperty('success')
         expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('data')
-        expect(res.body.data).toHaveProperty('token')
-        token = res.body.data.token;
+        expect(res.body.data[0]).toHaveProperty('token')
+        token = res.body.data[0].token;
     });
 
 
@@ -78,8 +78,8 @@ describe('/GET a user with id', () => {
         expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('success')
         expect(res.body).toHaveProperty('data')
-        expect(res.body.data).toHaveProperty('id')
-        expect(res.body.data).toHaveProperty('email')
+        expect(res.body.data[0]).toHaveProperty('id')
+        expect(res.body.data[0]).toHaveProperty('email')
         expect(res.body.success).toBeTruthy()
     });
 });

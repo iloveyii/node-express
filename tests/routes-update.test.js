@@ -20,7 +20,7 @@ describe('/UPDATE a user with id', () => {
         "password": "update-test-user-pass"
     };
 
-    it('it should create a new user', async () => {
+    it('it should create a new user that we login later', async () => {
         const res = await request(null)
             .post('/api/v1/users')
             .send({user})
@@ -28,7 +28,7 @@ describe('/UPDATE a user with id', () => {
         expect(res.body).toHaveProperty('success')
         expect(res.body).toHaveProperty('data')
         expect(res.body.success).toBeTruthy();
-        id = res.body.data.id;
+        id = res.body.data[0].id;
     });
 
     it('it should get the user logged in and get a token', async () => {
@@ -39,8 +39,8 @@ describe('/UPDATE a user with id', () => {
         expect(res.body).toHaveProperty('success')
         expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('data')
-        expect(res.body.data).toHaveProperty('token')
-        token = res.body.data.token;
+        expect(res.body.data[0]).toHaveProperty('token')
+        token = res.body.data[0].token;
     });
 
 
