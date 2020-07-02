@@ -1,5 +1,5 @@
 import { ResponseT, UserT } from "../types";
-import { ConditionI, UserI } from "../interfaces";
+import { ConditionI, ModelI } from "../interfaces";
 import { Database } from "./base/Database";
 import Condition from "./base/Condition";
 
@@ -7,7 +7,7 @@ import Condition from "./base/Condition";
 // --------------------------------------------------------------
 // Mongo base class - It will create any document of TypeT given
 // --------------------------------------------------------------
-class Mongo implements UserI {
+class Mongo implements ModelI {
     isNewRecord: boolean = true;
     user: UserT | undefined = undefined;
     // for response

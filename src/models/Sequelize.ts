@@ -1,4 +1,4 @@
-import { ConditionI, UserI } from "../interfaces";
+import { ConditionI, ModelI } from "../interfaces";
 import Condition from "./base/Condition";
 import { ResponseT, UserT } from "../types";
 
@@ -8,7 +8,7 @@ const Model = require("../../sequelize/src/models/index").User;
 // --------------------------------------------------------------
 // Mongo base class - It will create any document of TypeT given
 // --------------------------------------------------------------
-class Sequelize implements UserI {
+class Sequelize implements ModelI {
     user: UserT | undefined = undefined;
     // for response
     _response: ResponseT = {

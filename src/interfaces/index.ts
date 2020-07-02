@@ -4,7 +4,7 @@ import { ConditionT, UserT } from "../types";
 // -------------------------------------------------------------
 // Class interface - used in specific model class e.g User, Mongo
 // -------------------------------------------------------------
-export interface UserI {
+export interface ModelI {
 
     create(user: UserT): Promise<any>;
 
