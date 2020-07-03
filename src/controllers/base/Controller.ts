@@ -23,7 +23,6 @@ class Controller implements ControllerI {
             this.id = req.params.id;
         }
         this.user = req.body.user ? req.body.user : {email: "", password: ""};
-
     }
 
     async login(token_secret: string) {

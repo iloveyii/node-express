@@ -44,6 +44,7 @@ class Mongo implements ModelI {
         console.log("Inside read");
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
+        console.log(condition?.where);
         const model = await collection.find(condition?.where);
         const arr = await model.toArray();
         console.log("inside Mongo read ", arr);
