@@ -20,7 +20,7 @@ const dialect = "mongodb"; // process.env.DB_DIALECT || "mongodb";
 
 if (dialect === "mongodb") {
     const database = new Database("shop");
-    new Mongo(database, "users");
+    new Mongo(database, "users", undefined);
     console.log("Connected to MongoDB shop");
 }
 

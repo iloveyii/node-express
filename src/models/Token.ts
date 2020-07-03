@@ -14,6 +14,7 @@ class Token {
         let status: 1 | 2  = STATUS.forbidden;
         let authData: any = undefined;
         try {
+            console.log(req.token, token_secret);
             authData = await jwt.verify(req.token, token_secret);
             status = STATUS.verified;
         } catch (e) {

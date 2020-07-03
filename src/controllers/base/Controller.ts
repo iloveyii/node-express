@@ -32,6 +32,7 @@ class Controller implements ControllerI {
             const user = response.data[0];
             if (response.success && await bcrypt.compare(this.user?.password, user.password)) {
                 // Set jwt token in header
+                console.log("Sign token :", {id: user.id, email: user.email}, token_secret);
                 const token = await jwt.sign({id: user.id, email: user.email}, token_secret);
                 this.setResponse(true, {id: user.id, email: user.email, token});
             } else {

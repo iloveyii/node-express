@@ -11,8 +11,8 @@ Content-Type: application/json
 
 ###
 // Get a user
-GET http://localhost:6600/api/v1/users/5efe2ecd64f5ab543dff8350
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUyZWNkNjRmNWFiNTQzZGZmODM1MCIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzcxNzE4MX0.vnUV3gKdJsj5B2xoxqPgHnzJHUBm-MGuX4yJbzDJQa8
+GET http://localhost:6600/api/v1/users/5eff889154296a2c8b6ef057
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmY4ODkxNTQyOTZhMmM4YjZlZjA1NyIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzgwNTcxM30.dU8Dtmx_tkzJ6OxAiUWuVIF6Z_I68_6Y0ZhvRuPM3kc
 Content-Type: application/json
 
 
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "delete-test-user@email.com",
-    "password": "delete-test-user-pass"
+    "email": "newuser@user.com",
+    "password": "newuser-pass"
   }
 }

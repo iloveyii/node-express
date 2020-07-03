@@ -8,19 +8,14 @@ import Condition from "./base/Condition";
 // Mongo base class - It will create any document of TypeT given
 // --------------------------------------------------------------
 class Mongo implements ModelI {
-    isNewRecord: boolean = true;
     user: UserT | undefined = undefined;
     // for response
-    success: boolean = true;
-    data: any = undefined;
-    // db connection to mongo
-    db: any = undefined;
     _response: ResponseT = {
         success: true,
         data: []
     };
 
-    constructor(private database: Database, private collection: string) {
+    constructor(private database: Database, private collection: string, private data: any) {
     }
 
 
@@ -129,18 +124,18 @@ class Mongo implements ModelI {
 async function test_db() {
     const database = new Database("shop");
     const user: UserT | undefined = {email: "em@il.com", password: "p@$$w0rd"};
-    const model = await new Mongo(database, "users");
+    const model = await new Mongo(database, "users", undefined);
     const condition1: ConditionI = new Condition({where: {email: "em@il.com"}});
     const condition2: ConditionI = new Condition({where: {email: "em@ilupdated.com"}});
 
     console.log("----------------CREATE------------------");
-    console.log((await model.create(user)).data.model);
+    console.log((await model.create(user)).response.data.model);
     console.log("----------------READ------------------");
-    console.log((await model.read(condition1)).data.model);
+    console.log((await model.read(condition1)).response.data);
     console.log("----------------UPDATE------------------");
-    console.log((await model.update(condition1, condition2)).data);
+    console.log((await model.update(condition1, condition2)).response.data);
     console.log("----------------DELETE------------------");
-    console.log((await model.delete(condition2)).data);
+    console.log((await model.delete(condition2)).response.data);
 }
 
 

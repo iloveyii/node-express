@@ -52,6 +52,7 @@ describe('/UPDATE a user with id', () => {
             .send({
                 user: user_update
             })
+        console.log(res.body, id);
         expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('success')
         expect(res.body).toHaveProperty('data')
