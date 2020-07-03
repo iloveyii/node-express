@@ -51,8 +51,7 @@ class Controller implements ControllerI {
             this.setResponse(false, "Email already registered");
         } else {
             const hashedPassword = await bcrypt.hash(this.user?.password, 10);
-            const user = await this.model.create({email: this.user?.email, password: hashedPassword});
-            this._response = user.response;
+            this._response = (await this.model.create({email: this.user?.email, password: hashedPassword})).response;
         }
         return this;
     }
