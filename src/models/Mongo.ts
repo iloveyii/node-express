@@ -129,8 +129,8 @@ async function test_db() {
     const database = new Database("shop");
     const user: UserT | undefined = {email: "em@il.com", password: "p@$$w0rd"};
     const model = await new Mongo(database, "users");
-    const condition1: ConditionI = new Condition("mongodb", {where: {email: "em@il.com"}});
-    const condition2: ConditionI = new Condition("mongodb", {where: {email: "em@ilupdated.com"}});
+    const condition1: ConditionI = new Condition({where: {email: "em@il.com"}});
+    const condition2: ConditionI = new Condition({where: {email: "em@ilupdated.com"}});
 
     console.log("----------------CREATE------------------");
     console.log((await model.create(user)).data.model);

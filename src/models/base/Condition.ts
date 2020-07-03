@@ -2,8 +2,11 @@ import { ObjectId } from "mongodb";
 import { ConditionT } from "../../types";
 import { ConditionI } from "../../interfaces";
 
+
+const dialect = process.env.CONTROLLER_DIALECT || "mongodb";
+
 class Condition implements ConditionI {
-    constructor(private dialect: string, private readonly condition: ConditionT) {
+    constructor(private readonly condition: ConditionT) {
         console.log("Inside Condition constructor : ", dialect, condition);
         if (dialect === "mongodb") {
             if (condition.where.id) {

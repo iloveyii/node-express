@@ -6,7 +6,7 @@ import Mongo from "./Mongo";
 async function reset_db() {
     const database = new Database("shop");
     const model = await new Mongo(database, "users");
-    const condition1: ConditionI = new Condition("mongodb", {where: {}});
+    const condition1: ConditionI = new Condition({where: {}});
 
     console.log("----------------DELETE------------------");
     console.log((await model.deleteMany(condition1)));

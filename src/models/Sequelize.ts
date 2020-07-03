@@ -115,8 +115,8 @@ class Sequelize implements ModelI {
 async function test_db() {
     const user: UserT | undefined = {email: "em@il.com", password: "p@$$w0rd"};
     const model = await new Sequelize();
-    const condition2: ConditionI = new Condition("mysql", {where: {email: "em@ilupdated.com"}});
-    const condition1: ConditionI = new Condition("mysql", {where: {email: "em@il.com"}});
+    const condition2: ConditionI = new Condition({where: {email: "em@ilupdated.com"}});
+    const condition1: ConditionI = new Condition({where: {email: "em@il.com"}});
 
     console.log("----------------CREATE----------------");
     console.log((await model.create(user)).response);

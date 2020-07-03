@@ -2,7 +2,7 @@ import { ConditionT, UserT } from "../types";
 
 
 // -------------------------------------------------------------
-// Class interface - used in specific model class e.g User, Mongo
+// Class interface - used in specific model class e.g Controller, Mongo
 // -------------------------------------------------------------
 export interface ModelI {
 
@@ -18,7 +18,7 @@ export interface ModelI {
 // -------------------------------------------
 // Controller's user interface - used in Model
 // -------------------------------------------
-export interface CUserI {
+export interface ControllerI {
     isNewRecord: boolean;
 
     create(): any;
