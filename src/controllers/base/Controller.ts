@@ -28,10 +28,9 @@ class Controller implements ControllerI {
     async login(token_secret: string) {
         try {
             const c = new Condition({where: {email: this.user?.email}});
-            const model = await this.model.read(c);
-            console.log("Inside login", model.response);
-            const user = model.response.data[0];
-            if (model.response.success && await bcrypt.compare(this.user?.password, user.password)) {
+            const response = (await this.model.read(c)).response;
+            const user = response.data[0];
+            if (response.success && await bcrypt.compare(this.user?.password, user.password)) {
                 // Set jwt token in header
                 const token = await jwt.sign({id: user.id, email: user.email}, token_secret);
                 this.setResponse(true, {id: user.id, email: user.email, token});
@@ -47,10 +46,8 @@ class Controller implements ControllerI {
     // CRUD
     async create() {
         const condition = new Condition({where: {email: this.req.body.user.email}});
-        console.log("inside create", condition);
-        const model = await this.model.read(condition);
-        console.log(model);
-        if (model.response.success) {
+        const response = (await this.model.read(condition)).response;
+        if (response.success) {
             this.setResponse(false, "Email already registered");
         } else {
             const hashedPassword = await bcrypt.hash(this.user?.password, 10);
@@ -61,16 +58,12 @@ class Controller implements ControllerI {
     }
 
     async read() {
-        let model;
         if (this.id) {
-            console.log("find one", this.id);
             const c = new Condition({where: {id: this.id}});
-            model = await this.model.read(c);
+            this._response = (await this.model.read(c)).response;
         } else {
-            console.log("find many", this.id);
-            model = await this.model.read();
+            this._response = (await this.model.read()).response;
         }
-        this._response = model.response;
         return this;
     }
 
@@ -78,18 +71,14 @@ class Controller implements ControllerI {
         const condition = {where: {id: this.req.params.id}};
         const c = new Condition(condition);
         const hashedPassword = await bcrypt.hash(this.user?.password, 10);
-        const model = await this.model.update(c, {email: this.user?.email, password: hashedPassword});
-
-        this._response = model.response;
+        this._response = (await this.model.update(c, {email: this.user?.email, password: hashedPassword})).response;
         return this;
     }
 
     async delete() {
         const condition = {where: {id: this.id}};
         const c = new Condition(condition);
-        const model = await this.model.delete(c);
-
-        this._response = model.response;
+        this._response = (await this.model.delete(c)).response;
         return this;
     }
 
