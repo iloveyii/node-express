@@ -8,7 +8,6 @@ import Condition from "./base/Condition";
 // Mongo base class - It will create any document of TypeT given
 // --------------------------------------------------------------
 class Mongo implements ModelI {
-    user: UserT | undefined = undefined;
     // for response
     _response: ResponseT = {
         success: true,
