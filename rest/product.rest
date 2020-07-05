@@ -23,8 +23,8 @@ Content-Type: application/json
 
 {
   "product": {
-    "name": "Product 1",
-    "price": "50",
+    "name": "Product 01",
+    "price": "10",
     "currency": "sek"
   }
 }

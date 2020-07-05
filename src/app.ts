@@ -10,7 +10,7 @@ import user from "./routes/user";
 import product from "./routes/product";
 import login from "./routes/login";
 import { Database } from "./models/base/Database";
-import Mongo from "./models/Mongo";
+import Mongo from "./models/base/Mongo";
 
 
 // ----------------------------------

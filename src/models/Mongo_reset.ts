@@ -1,7 +1,7 @@
 import { Database } from "./base/Database";
 import { ConditionI } from "../interfaces";
 import Condition from "./base/Condition";
-import Mongo from "./Mongo";
+import Mongo from "./base/Mongo";
 
 async function reset_db() {
     const database = new Database("shop");

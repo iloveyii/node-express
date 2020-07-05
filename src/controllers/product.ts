@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { Database } from "../models/base/Database";
-import Mongo from "../models/Mongo";
+import Mongo from "../models/base/Mongo";
 import Condition from "../models/base/Condition";
+import Product from "../models/Product";
 
 
 const database = new Database("shop");
@@ -26,8 +27,8 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 // @desc   Register/Create a Model - using bcrypt hashed passwords
 // @route  POST /api/v1/register
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
-    const model = new Mongo(database, "products", req.body.product);
-    await model.create();
+    const model = new Product(database, "products", req.body.product);
+    await model.validate() && await model.create();
     return res.status(201).send(model.response);
 };
 

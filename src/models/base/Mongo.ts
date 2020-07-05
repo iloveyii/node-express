@@ -1,7 +1,8 @@
-import { ResponseT, UserT } from "../types";
-import { ConditionI, ModelI } from "../interfaces";
-import { Database } from "./base/Database";
-import Condition from "./base/Condition";
+import { ResponseT, UserT } from "../../types";
+import { ConditionI, ModelI } from "../../interfaces";
+import { Database } from "./Database";
+import Condition from "./Condition";
+import { Validator } from "node-input-validator";
 
 
 // --------------------------------------------------------------
@@ -22,6 +23,7 @@ class Mongo implements ModelI {
     // Implement interface
     // ----------------------------------
     async create(): Promise<any> {
+
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.insertOne(this.data);
@@ -97,20 +99,34 @@ class Mongo implements ModelI {
         // add id from _id
         console.log("data", data);
         let newData = [];
-        if (success === true) {
-            if (!Array.isArray(data)) data = [data];
-            newData = data.map((d: any) => {
-                if (d._id) {
-                    d["id"] = d._id;
-                }
-                return d;
-            });
-        }
-        this._response = {success, data: newData};
+        if (!Array.isArray(data)) data = [data];
+        newData = data.map((d: any) => {
+            if (d._id) {
+                d["id"] = d._id;
+            }
+            return d;
+        });
+        this._response = {"success": success, "data": newData};
     }
 
     get response(): ResponseT {
         return this._response;
+    }
+
+    rules() {
+        return {};
+    }
+
+    async validate() {
+        const rules = this.rules();
+        const validator = new Validator(this.data, rules);
+        const matched = await validator.check();
+        if (!matched) {
+            this.setResponse(false, validator.errors);
+            return false;
+        }
+        this.setResponse(true, validator.errors);
+        return true;
     }
 }
 
