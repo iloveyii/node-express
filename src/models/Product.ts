@@ -12,7 +12,7 @@ type ProductT = {
 
 class Product extends Mongo {
 
-    constructor(database: Database, collection: string, private product: ProductT) {
+    constructor(database: Database, collection: string, private product?: ProductT) {
         super(database, collection, product);
     }
 

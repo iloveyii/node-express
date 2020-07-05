@@ -10,7 +10,7 @@ const database = new Database("shop");
 // @desc   Get all from Model
 // @route  GET /api/v1/product
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
-    const model = new Mongo(database, "products", undefined);
+    const model = new Product(database, "products", undefined);
     await model.read();
     return res.status(200).send(model.response);
 };
@@ -19,7 +19,7 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
 // @route  GET /api/v1/product/:id
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
-    const model = new Mongo(database, "products", req.body.product);
+    const model = new Product(database, "products", req.body.product);
     await model.read(condition);
     return res.status(200).send(model.response);
 };
@@ -36,15 +36,15 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 // @route  UPDATE /api/v1/product
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
-    const model = new Mongo(database, "products", req.body.product);
-    await model.update(condition);
+    const model = new Product(database, "products", req.body.product);
+    await model.validate() && await model.update(condition);
     return res.status(200).send(model.response);
 };
 
 // @desc   Delete Model
 // @route  DELETE /api/v1/product
 export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
-    const model = new Mongo(database, "products", req.body.product);
+    const model = new Product(database, "products", req.body.product);
     const condition = new Condition({where: {id: req.params.id}});
     await model.delete(condition);
     return res.status(200).send(model.response);
