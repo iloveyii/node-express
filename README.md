@@ -3,6 +3,18 @@ Node Express
 This is a node and express application using Typescript. It is dockerized and can be easily used for any
 microservice.
 
+## Capabilities
+   * Controllers
+   * Models
+   * Routes
+   * Middle wares
+   * Sequelize
+   * Mongo DB
+   * Validation
+   * Typescript Classes
+   * JWT Authentication
+   * Simplest MVC
+
 
 ## Installation
    * Using without docker
