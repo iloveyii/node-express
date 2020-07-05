@@ -7,10 +7,10 @@ import bodyParser from "body-parser";
 // Routes Import
 // ----------------------------------
 import user from "./routes/user";
+import product from "./routes/product";
 import login from "./routes/login";
 import { Database } from "./models/base/Database";
 import Mongo from "./models/Mongo";
-import Sequelize from "./models/Sequelize";
 
 
 // ----------------------------------
@@ -18,11 +18,7 @@ import Sequelize from "./models/Sequelize";
 // ----------------------------------
 const dialect = "mongodb"; // process.env.DB_DIALECT || "mongodb";
 
-if (dialect === "mongodb") {
-    const database = new Database("shop");
-    new Mongo(database, "users", undefined);
-    console.log("Connected to MongoDB shop");
-}
+
 
 
 // ----------------------------------
@@ -42,6 +38,7 @@ app.use(cors());
 // API Routes
 // ----------------------------------
 app.use("/api/v1/users", user);
+app.use("/api/v1/products", product);
 app.use("/api/v1/login", login);
 
 // ----------------------------------

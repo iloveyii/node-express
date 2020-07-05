@@ -18,7 +18,7 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
 // @desc   Get a Controller
 // @route  GET /api/v1/user/:id
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
-     const user = req.body.use || {};
+     const user = req.body.user || {};
     user.id = req.params.id;
     const model = new Mongo(database, "users", user);
     const controller = new Controller(req, model);

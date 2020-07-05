@@ -58,6 +58,7 @@ class Controller implements ControllerI {
     }
 
     async read() {
+        console.log("inside Controller read");
         if (this.id) {
             const c = new Condition({where: {id: this.id}});
             this._response = (await this.model.read(c)).response;

@@ -14,34 +14,30 @@ class Mongo implements ModelI {
         data: []
     };
 
-    constructor(private database: Database, private collection: string, private data: any) {
+    constructor(private database: Database, private readonly collection: string, private data: any) {
+        console.log("Mongo Collection : ", collection, data);
     }
 
 
     // ----------------------------------
     // Implement interface
     // ----------------------------------
-    async create(user: UserT): Promise<any> {
-        console.log("Inside create");
+    async create(user: UserT): Promise<any> { // @todo remove user
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
-        const model = await collection.insertOne(user);
+        const model = await collection.insertOne(this.data);
         this.setResponse(
             true,
             model.ops[0]
         );
-        console.log("Inside create");
         return this;
     }
 
     async read(condition?: ConditionI) {
-        console.log("Inside read");
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
-        console.log(condition?.where);
         const model = await collection.find(condition?.where);
         const arr = await model.toArray();
-        console.log("inside Mongo read ", arr);
         if (arr.length > 0) {
             this.setResponse(
                 true,
@@ -53,15 +49,16 @@ class Mongo implements ModelI {
                 ["No record found with condition " + JSON.stringify(condition?.where)]
             );
         }
-        console.log("Inside mongo " + this.response);
         return this;
     }
 
-    async update(condition: ConditionI, user: any) {
-        console.log("Inside update");
+    async update(condition: ConditionI, user: any) { // @todo remove user
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
-        const model = await collection.findOneAndUpdate(condition?.where, {$set: {...user}}, {returnNewDocument: true});
+        const model = await collection.findOneAndUpdate(condition?.where, {$set: {...this.data}}, {
+            upsert: true,
+            returnOriginal: false,
+        });
         this.setResponse(
             true,
             model.value
@@ -70,11 +67,9 @@ class Mongo implements ModelI {
     }
 
     async delete(condition: ConditionI) {
-        console.log("Inside delete");
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.deleteOne(condition?.where);
-        console.log("delete", model.deletedCount);
         if (model.deletedCount > 0) {
             this.setResponse(
                 true,

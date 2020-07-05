@@ -13,7 +13,7 @@ export class Database {
     }
 
     async connect() {
-        if (Database.database !== undefined) return Database.database;
+        // if (Database.database !== undefined) return Database.database;
         try {
             const client = await MongoClient.connect(mongo.url, mongo.mongoOptions);
             console.log("Mongodb connected to : " + this.dbname);

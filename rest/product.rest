@@ -1,0 +1,65 @@
+
+### ----------------------------------
+### Controller API
+### ----------------------------------
+
+###
+// Get all products
+GET http://localhost:6600/api/v1/products
+Content-Type: application/json
+
+
+###
+// Get a user
+GET http://localhost:6600/api/v1/products/5f019efc2a7003554cdd3a80
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmY4ODkxNTQyOTZhMmM4YjZlZjA1NyIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzgwNTcxM30.dU8Dtmx_tkzJ6OxAiUWuVIF6Z_I68_6Y0ZhvRuPM3kc
+Content-Type: application/json
+
+
+###
+// Create a user
+POST http://localhost:6600/api/v1/products
+Content-Type: application/json
+
+{
+  "product": {
+    "name": "Product 1",
+    "price": "50",
+    "currency": "sek"
+  }
+}
+
+
+###
+// Delete a user
+DELETE http://localhost:6600/api/v1/products/5f019efc2a7003554cdd3a80
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUyZWNkNjRmNWFiNTQzZGZmODM1MCIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzcxNzE4MX0.vnUV3gKdJsj5B2xoxqPgHnzJHUBm-MGuX4yJbzDJQa8
+Content-Type: application/json
+
+
+###
+// Update a user
+PUT http://localhost:6600/api/v1/products/5f019efc2a7003554cdd3a80
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUyZWNkNjRmNWFiNTQzZGZmODM1MCIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzcxNzE4MX0.vnUV3gKdJsj5B2xoxqPgHnzJHUBm-MGuX4yJbzDJQa8
+Content-Type: application/json
+
+{
+  "product": {
+    "name": "Product 6",
+    "price": "500",
+    "currency": "sek"
+  }
+}
+
+
+###
+// Login a user
+POST http://localhost:6600/api/v1/login
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "newuser@user.com",
+    "password": "newuser-pass"
+  }
+}
