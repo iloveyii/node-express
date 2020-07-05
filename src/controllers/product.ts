@@ -1,12 +1,10 @@
-import Controller from "./base/Controller";
-import { RequestHandler, Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Database } from "../models/base/Database";
 import Mongo from "../models/Mongo";
-import Sequelize from "../models/Sequelize";
 import Condition from "../models/base/Condition";
 
-const database = new Database("shop");
 
+const database = new Database("shop");
 
 // @desc   Get all from Controller
 // @route  GET /api/v1/product
@@ -19,13 +17,10 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
 // @desc   Get a Controller
 // @route  GET /api/v1/product/:id
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
-    const product = req.body.product || {};
-    product.id = req.params.id;
-    console.log("controller products ");
-    const model = new Mongo(database, "products", product);
-    const controller = new Controller(req, model);
-    await controller.read();
-    return res.status(200).send(controller.response);
+    const condition = new Condition({where: {id: req.params.id}});
+    const model = new Mongo(database, "products", req.body.product);
+    await model.read(condition);
+    return res.status(200).send(model.response);
 };
 
 // @desc   Register/Create a Controller - using bcrypt hashed passwords

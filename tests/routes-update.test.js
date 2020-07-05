@@ -36,7 +36,7 @@ describe('/UPDATE a user with id', () => {
         const res = await request(null)
             .post('/api/v1/login')
             .send({user})
-
+        console.log(res.body)
         expect(res.body).toHaveProperty('success')
         expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('data')

@@ -22,7 +22,7 @@ class Mongo implements ModelI {
     // ----------------------------------
     // Implement interface
     // ----------------------------------
-    async create(user: UserT): Promise<any> { // @todo remove user
+    async create(user: any): Promise<any> { // @todo remove user
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.insertOne(this.data);
