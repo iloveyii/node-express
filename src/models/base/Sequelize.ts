@@ -1,8 +1,8 @@
-import { ConditionI, ModelI } from "../interfaces";
-import Condition from "./base/Condition";
-import { ResponseT, UserT } from "../types";
+import { ConditionI, ModelI } from "../../interfaces";
+import Condition from "./Condition";
+import { ResponseT, UserT } from "../../types";
 
-const Model = require("../../sequelize/src/models/index").User;
+const Model = require("../../../sequelize/src/models/index").User;
 
 
 // --------------------------------------------------------------
@@ -23,7 +23,7 @@ class Sequelize implements ModelI {
     // ----------------------------------
     // Implement interface
     // ----------------------------------
-    async create(user: UserT): Promise<any> {
+    async create(user?: UserT): Promise<any> {
         const model = await Model.create(user);
         this.setResponse(
             true,
@@ -60,7 +60,7 @@ class Sequelize implements ModelI {
         return this;
     }
 
-    async update(condition: ConditionI, user: any): Promise<any> {
+    async update(condition: ConditionI, user?: any): Promise<any> {
         const model = await Model.findOne(condition.where);
         const status = model && await model.update(user);
 

@@ -1,4 +1,4 @@
-import Token, { STATUS } from "../models/Token";
+import Token, { STATUS } from "../models/base/Token";
 
 export const same_user_id = async (req: any, res: any, next: any) => {
     // Verify the token

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { Database } from "../models/base/Database";
-import Mongo from "../models/base/Mongo";
 import Condition from "../models/base/Condition";
 import Product from "../models/Product";
 
