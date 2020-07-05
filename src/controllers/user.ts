@@ -29,7 +29,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
     const {user} = req.body;
     user.password = await bcrypt.hash(user?.password, 10);
     const model = new Mongo(database, "users", user);
-    await model.create({});
+    await model.create();
     return res.status(201).send(model.response);
 };
 
@@ -38,7 +38,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     const model = new Mongo(database, "users", req.body.user);
     const condition = new Condition({where: {id: req.params.id}});
-    await model.update(condition, {});
+    await model.update(condition);
     return res.status(200).send(model.response);
 };
 

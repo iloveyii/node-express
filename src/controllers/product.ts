@@ -27,7 +27,7 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 // @route  POST /api/v1/register
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     const model = new Mongo(database, "products", req.body.product);
-    await model.create({email: "", password: ""}); // @todo remove
+    await model.create();
     return res.status(201).send(model.response);
 };
 
@@ -36,7 +36,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
     const model = new Mongo(database, "products", req.body.product);
-    await model.update(condition, {});
+    await model.update(condition);
     return res.status(200).send(model.response);
 };
 

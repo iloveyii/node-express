@@ -18,11 +18,10 @@ class Mongo implements ModelI {
         console.log("Mongo Collection : ", collection, data);
     }
 
-
     // ----------------------------------
     // Implement interface
     // ----------------------------------
-    async create(user: any): Promise<any> { // @todo remove user
+    async create(): Promise<any> {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.insertOne(this.data);
@@ -52,7 +51,7 @@ class Mongo implements ModelI {
         return this;
     }
 
-    async update(condition: ConditionI, user: any) { // @todo remove user
+    async update(condition: ConditionI) {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.findOneAndUpdate(condition?.where, {$set: {...this.data}}, {
@@ -123,11 +122,11 @@ async function test_db() {
     const condition2: ConditionI = new Condition({where: {email: "em@ilupdated.com"}});
 
     console.log("----------------CREATE------------------");
-    console.log((await model.create(user)).response.data.model);
+    console.log((await model.create()).response.data.model);
     console.log("----------------READ------------------");
     console.log((await model.read(condition1)).response.data);
     console.log("----------------UPDATE------------------");
-    console.log((await model.update(condition1, condition2)).response.data);
+    console.log((await model.update(condition1)).response.data);
     console.log("----------------DELETE------------------");
     console.log((await model.delete(condition2)).response.data);
 }

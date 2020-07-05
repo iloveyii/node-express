@@ -6,11 +6,11 @@ import { ConditionT, UserT } from "../types";
 // -------------------------------------------------------------
 export interface ModelI {
 
-    create(user: UserT): Promise<any>;
+    create(): Promise<any>;
 
     read(condition: ConditionI): Promise<any>;
 
-    update(condition: ConditionI, user: any): Promise<any>;
+    update(condition: ConditionI): Promise<any>;
 
     delete(condition: ConditionI): Promise<any>;
 }
