@@ -6,7 +6,7 @@ import Condition from "../models/base/Condition";
 
 const database = new Database("shop");
 
-// @desc   Get all from Controller
+// @desc   Get all from Model
 // @route  GET /api/v1/product
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
     const model = new Mongo(database, "products", undefined);
@@ -14,7 +14,7 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
     return res.status(200).send(model.response);
 };
 
-// @desc   Get a Controller
+// @desc   Get a Model
 // @route  GET /api/v1/product/:id
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
@@ -23,7 +23,7 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     return res.status(200).send(model.response);
 };
 
-// @desc   Register/Create a Controller - using bcrypt hashed passwords
+// @desc   Register/Create a Model - using bcrypt hashed passwords
 // @route  POST /api/v1/register
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     const model = new Mongo(database, "products", req.body.product);
@@ -31,7 +31,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
     return res.status(201).send(model.response);
 };
 
-// @desc   Update a Controller
+// @desc   Update a Model
 // @route  UPDATE /api/v1/product
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
@@ -40,7 +40,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     return res.status(200).send(model.response);
 };
 
-// @desc   Delete Controller
+// @desc   Delete Model
 // @route  DELETE /api/v1/product
 export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
     const model = new Mongo(database, "products", req.body.product);
