@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import compression from "compression";
 import bodyParser from "body-parser";
+import expressLayouts from "express-ejs-layouts";
 
 // ----------------------------------
 // Routes Import
@@ -33,6 +34,11 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
+
+// ----------------------------------
+// EJS Layouts
+// ----------------------------------
+app.use(expressLayouts);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
