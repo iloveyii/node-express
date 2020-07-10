@@ -48,7 +48,7 @@ app.set("view engine", "ejs");
 app.use("/api/v1/users", user);
 app.use("/api/v1/products", product);
 app.use("/api/v1/login", login);
-app.use("/api/v1/pages", front);
+app.use("/", front);
 
 // ----------------------------------
 // Export app

@@ -10,6 +10,7 @@ const database = new Database("blog");
 // @desc   Get all from Model
 // @route  GET /api/v1/product
 export const getArticlesPage = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Params : ", req.params);
     switch (req.params?.id) {
         case "index":
             res.render("front/articles.ejs");
