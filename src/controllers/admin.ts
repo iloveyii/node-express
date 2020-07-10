@@ -20,6 +20,15 @@ export const getPage = async (req: Request, res: Response, next: NextFunction) =
         case "article":
             res.render("admin/partials/_article.ejs", options);
             break;
+        case "videos":
+            res.render("admin/partials/_videos.ejs", options);
+            break;
+        case "settings":
+            res.render("admin/partials/_settings.ejs", options);
+            break;
+        case "toggle":
+            res.render("admin/partials/_toggle.ejs", options);
+            break;
         default:
             res.status(404).render("admin/404.ejs", options);
     }
