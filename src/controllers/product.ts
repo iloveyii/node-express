@@ -26,6 +26,7 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 // @desc   Register/Create a Model - using bcrypt hashed passwords
 // @route  POST /api/v1/register
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Product received :", req.body.product);
     const model = new Product(database, "products", req.body.product);
     await model.validate() && await model.create();
     return res.status(201).send(model.response);

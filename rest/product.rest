@@ -17,6 +17,20 @@ Content-Type: application/json
 
 
 ###
+// Post to page
+POST http://localhost:6600/admin/product
+Content-Type: application/json
+
+{
+  "product": {
+    "name": "Product 01",
+    "price": "10",
+    "currency": "sek"
+  }
+}
+
+
+###
 // Create a user
 POST http://localhost:6600/api/v1/products
 Content-Type: application/json

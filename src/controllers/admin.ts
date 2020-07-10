@@ -10,7 +10,7 @@ const database = new Database("blog");
 // @desc   Get the specified page
 // @route  GET /admin/:id
 export const getPage = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("Params admin : ", req.params);
+    console.log("Params admin get : ", req.params);
     const options = {extractStyles: true, extractScripts: true, layout: "admin/layout"};
     switch (req.params.id) {
         case undefined:
@@ -38,8 +38,8 @@ export const getPage = async (req: Request, res: Response, next: NextFunction) =
 // @desc   Save data to the specified page
 // @route  POST /admin/:id
 export const saveData = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("Params admin : ", req.params);
     const options = {extractStyles: true, extractScripts: true, layout: "admin/layout"};
+    console.log("Params admin for save : ", req.params);
     switch (req.params.id) {
         case undefined:
         case "":
@@ -49,7 +49,7 @@ export const saveData = async (req: Request, res: Response, next: NextFunction) 
             res.render("admin/partials/_article.ejs", options);
             break;
         case "product":
-            res.render("admin/partials/_product.ejs", options);
+            return res.status(201).send({success: "done"});
             break;
         case "settings":
             res.render("admin/partials/_settings.ejs", options);

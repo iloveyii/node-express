@@ -34,7 +34,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({origin: "*", optionsSuccessStatus: 200}));
 
 // ----------------------------------
 // EJS Layouts
