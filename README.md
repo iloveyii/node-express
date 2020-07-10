@@ -14,6 +14,7 @@ microservice.
    * Typescript Classes
    * JWT Authentication
    * Simplest MVC
+   * TS Lint
 
 
 ## Installation

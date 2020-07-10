@@ -18,7 +18,7 @@ services:
       cd /home/node/app
       && npm install
       && npm run test
-      && npm start
+      && npm run dev
       "
     volumes:
       - .:/home/node/app
