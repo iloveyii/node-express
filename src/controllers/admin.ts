@@ -10,21 +10,18 @@ const database = new Database("blog");
 // @desc   Get all from Model
 // @route  GET /api/v1/product
 export const getPage = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("Params : ", req.params);
+    console.log("Params admin : ", req.params);
     const options = {extractStyles: true, extractScripts: true, layout: "admin/layout"};
-    switch (req.params?.id) {
+    switch (req.params.id) {
         case undefined:
         case "":
             res.render("admin/dashboard.ejs", options);
             break;
-        case "carousel":
-            res.render("front/partials/_carousel.ejs", options);
-            break;
-        case "details":
-            res.render("front/partials/_details.ejs", options);
+        case "article":
+            res.render("admin/partials/_article.ejs", options);
             break;
         default:
-            res.status(404).render("front/404.ejs", options);
+            res.status(404).render("admin/404.ejs", options);
     }
 };
 
