@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Bootsrap v5</title>
+    <title>Bootstrap v5</title>
     <link rel="stylesheet" href="/css/main.css"/>
-    <link rel="stylesheet" href="/css/carousel.css"/>
+    <%- style %>
 </head>
 <body class="d-flex flex-column sticky-footer-wrapper">
 <!-- Fixed navbar -->
@@ -25,5 +25,7 @@
 <!-- Begin footer -->
 <%- include("front/partials/_footer.ejs") %>
 <script src="/js/bootstrap.min.js"></script>
+<%- script %>
+
 </body>
 </html>

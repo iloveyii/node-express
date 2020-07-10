@@ -16,7 +16,7 @@ export const getArticlesPage = async (req: Request, res: Response, next: NextFun
             res.render("front/articles.ejs");
             break;
         case "carousel":
-            res.render("front/partials/_carousel.ejs");
+            res.render("front/partials/_carousel.ejs", {extractStyles: true, extractScripts: true});
             break;
         case "details":
             res.render("front/partials/_details.ejs");
