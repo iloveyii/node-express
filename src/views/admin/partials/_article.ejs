@@ -1,0 +1,91 @@
+<form class="needs-validation" novalidate>
+    <h4 class="mb-3">Article</h4>
+    <div class="row g-3">
+        <div class="col-12">
+            <label for="title" class="form-label">Title</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    placeholder="Enter title of the article"
+                    value=""
+                    required
+            />
+            <div class="invalid-feedback">
+                Valid title is required.
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label for="body" class="form-label">Body</label>
+            <textarea
+                    class="form-control"
+                    id="body"
+                    placeholder="Enter body of the article"
+                    value=""
+                    required
+                    rows="5"
+            ></textarea>
+            <div class="invalid-feedback">
+                Valid body is required.
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="cardTitle" class="form-label"
+            >Card Title</label
+            >
+            <input
+                    type="text"
+                    class="form-control"
+                    id="cardTitle"
+                    placeholder="Type title"
+                    value=""
+                    required
+            />
+            <div class="invalid-feedback">
+                Valid title is required.
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="cardBody" class="form-label">Card body</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="cardBody"
+                    placeholder=""
+                    value=""
+                    required
+            />
+            <div class="invalid-feedback">
+                Valid body is required.
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label for="code" class="form-label">Code</label>
+            <textarea
+                    class="form-control"
+                    id="code"
+                    placeholder="Enter body of the article"
+                    value=""
+                    required
+                    rows="3"
+            ></textarea>
+            <div class="invalid-feedback">
+                Valid code is required.
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="my-4"/>
+
+    <button
+            class="btn btn-primary btn-lg btn-block mb-4"
+            type="submit"
+    >
+        Save article
+    </button>
+</form>

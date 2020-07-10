@@ -1,0 +1,89 @@
+<form class="needs-validation" novalidate>
+    <h4 class="mb-3">Product</h4>
+    <div class="row g-3">
+        <div class="col-12">
+            <label for="name" class="form-label">Name</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Enter name of the product"
+                    value=""
+                    required
+            />
+            <div class="invalid-feedback">
+                Valid name is required.
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+                    class="form-control"
+                    id="description"
+                    placeholder="Enter description of the product"
+                    value=""
+                    required
+                    rows="5"
+            ></textarea>
+            <div class="invalid-feedback">
+                Valid description is required.
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="price" class="form-label">Price</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="price"
+                    placeholder="Type price"
+                    value=""
+                    required
+            />
+            <div class="invalid-feedback">
+                Valid price is required.
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="stock" class="form-label">Stock</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="stock"
+                    placeholder="Type stock"
+                    value=""
+                    required
+            />
+            <div class="invalid-feedback">
+                Valid stock is required.
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label for="variation" class="form-label">Variation</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="variation"
+                    placeholder="Variation of"
+                    value=""
+                    required
+            />
+            <div class="invalid-feedback">
+                Valid variation is required.
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="my-4"/>
+
+    <button
+            class="btn btn-primary btn-lg btn-block mb-4"
+            type="submit"
+    >
+        Save article
+    </button>
+</form>

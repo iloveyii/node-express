@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Bootsrap v5</title>
+    <link rel="stylesheet" href="/css/admin.css"/>
+</head>
+<body class="d-flex flex-column sticky-footer-wrapper">
+<!-- Fixed navbar -->
+<%- include("partials/_navbar.ejs") %>
+
+<!-- Begin page content -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <%- include("partials/_sidebar.ejs") %>
+
+        <main class="col-md-10 col-lg-10 ml-sm-auto px-md-4">
+
+
+            <div class="container content">
+                <div class="row">
+                    <div class="col-md-7 col-lg-8">
+                        <%- body %>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
