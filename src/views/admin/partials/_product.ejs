@@ -1,80 +1,78 @@
 <form class="needs-validation" novalidate>
-    <h4 class="mb-3">Article</h4>
+    <h4 class="mb-3">Product</h4>
     <div class="row g-3">
         <div class="col-12">
-            <label for="title" class="form-label">Title</label>
+            <label for="name" class="form-label">Name</label>
             <input
                     type="text"
                     class="form-control"
-                    id="title"
-                    placeholder="Enter title of the article"
+                    id="name"
+                    placeholder="Enter name of the product"
                     value=""
                     required
             />
             <div class="invalid-feedback">
-                Valid title is required.
+                Valid name is required.
             </div>
         </div>
 
         <div class="col-12">
-            <label for="body" class="form-label">Body</label>
+            <label for="description" class="form-label">Description</label>
             <textarea
                     class="form-control"
-                    id="body"
-                    placeholder="Enter body of the article"
+                    id="description"
+                    placeholder="Enter description of the product"
                     value=""
                     required
                     rows="5"
             ></textarea>
             <div class="invalid-feedback">
-                Valid body is required.
+                Valid description is required.
             </div>
         </div>
 
         <div class="col-sm-6">
-            <label for="cardTitle" class="form-label"
-            >Card Title</label
-            >
+            <label for="price" class="form-label">Price</label>
             <input
                     type="text"
                     class="form-control"
-                    id="cardTitle"
-                    placeholder="Type title"
+                    id="price"
+                    placeholder="Type price"
                     value=""
                     required
             />
             <div class="invalid-feedback">
-                Valid title is required.
+                Valid price is required.
             </div>
         </div>
 
         <div class="col-sm-6">
-            <label for="cardBody" class="form-label">Card body</label>
+            <label for="stock" class="form-label">Stock</label>
             <input
                     type="text"
                     class="form-control"
-                    id="cardBody"
-                    placeholder=""
+                    id="stock"
+                    placeholder="Type stock"
                     value=""
                     required
             />
             <div class="invalid-feedback">
-                Valid body is required.
+                Valid stock is required.
             </div>
         </div>
 
         <div class="col-12">
-            <label for="code" class="form-label">Code</label>
-            <textarea
+            <label for="variation" class="form-label">Variation</label>
+            <input
+                    type="text"
                     class="form-control"
-                    id="code"
-                    placeholder="Enter body of the article"
+                    id="variation"
+                    placeholder="Variation of"
                     value=""
                     required
-                    rows="3"
-            ></textarea>
+            />
             <div class="invalid-feedback">
-                Valid code is required.
+                Valid variation is required.
             </div>
         </div>
 

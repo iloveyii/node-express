@@ -7,8 +7,8 @@ import Product from "../models/Product";
 
 const database = new Database("blog");
 
-// @desc   Get all from Model
-// @route  GET /api/v1/product
+// @desc   Get the specified page
+// @route  GET /admin/:id
 export const getPage = async (req: Request, res: Response, next: NextFunction) => {
     console.log("Params admin : ", req.params);
     const options = {extractStyles: true, extractScripts: true, layout: "admin/layout"};
@@ -20,8 +20,8 @@ export const getPage = async (req: Request, res: Response, next: NextFunction) =
         case "article":
             res.render("admin/partials/_article.ejs", options);
             break;
-        case "videos":
-            res.render("admin/partials/_videos.ejs", options);
+        case "product":
+            res.render("admin/partials/_product.ejs", options);
             break;
         case "settings":
             res.render("admin/partials/_settings.ejs", options);
@@ -33,4 +33,34 @@ export const getPage = async (req: Request, res: Response, next: NextFunction) =
             res.status(404).render("admin/404.ejs", options);
     }
 };
+
+
+// @desc   Save data to the specified page
+// @route  POST /admin/:id
+export const saveData = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Params admin : ", req.params);
+    const options = {extractStyles: true, extractScripts: true, layout: "admin/layout"};
+    switch (req.params.id) {
+        case undefined:
+        case "":
+            res.render("admin/dashboard.ejs", options);
+            break;
+        case "article":
+            res.render("admin/partials/_article.ejs", options);
+            break;
+        case "product":
+            res.render("admin/partials/_product.ejs", options);
+            break;
+        case "settings":
+            res.render("admin/partials/_settings.ejs", options);
+            break;
+        case "toggle":
+            res.render("admin/partials/_toggle.ejs", options);
+            break;
+        default:
+            res.status(404).render("admin/404.ejs", options);
+    }
+};
+
+
 
