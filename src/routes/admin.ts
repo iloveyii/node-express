@@ -1,5 +1,5 @@
 import express from "express";
-import { getPage } from "../controllers/front";
+import { getPage } from "../controllers/admin";
 
 
 const router = express.Router();

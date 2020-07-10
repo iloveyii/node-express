@@ -9,23 +9,23 @@
 </head>
 <body class="d-flex flex-column sticky-footer-wrapper">
 <!-- Fixed navbar -->
-<%- include("front/partials/_navbar.ejs") %>
-<!-- Begin page content -->
+<%- include("partials/_navbar.ejs") %>
 
+<!-- Begin page content -->
 <main class="flex-shrink-0">
     <!-- Header  -->
-    <%- include("front/partials/_showcase.ejs") %>
+    <%- include("partials/_showcase.ejs") %>
 
     <div class="container mt-5">
-        <%-body%>
+        <%- body %>
 
     </div>
 </main>
 
 <!-- Begin footer -->
-<%- include("front/partials/_footer.ejs") %>
+<%- include("partials/_footer.ejs") %>
 <script src="/js/bootstrap.min.js"></script>
-<%- script %>
+<%- script ? script : "" %>
 
 </body>
 </html>
