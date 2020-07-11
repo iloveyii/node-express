@@ -1,0 +1,75 @@
+<table class="table caption-top">
+    <caption><%- table.caption %> </caption>
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <% table.cols.map(function (col) { %>
+            <th scope="col"><%= col %></th>
+        <% }) %>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    <% table.rows.map(function (row, i) { %>
+        <tr>
+            <th scope="row"><%- i %></th>
+            <% table.fields.map(function (field) { %>
+                <td><%- row[field] %></td>
+            <% }) %>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+
+<script>
+    function insertRows(rows) {
+        const tbody = document.getElementById("tbody");
+        let i = 0;
+        rows.forEach(row => {
+            const tr = document.createElement("tr");
+            let td = document.createElement("th");
+            td.innerText = ++i + " ";
+            tr.append(td);
+
+            ["name", "price", "stock"].forEach(field => {
+                const td = document.createElement("td");
+                td.innerText = row[field] ? row[field] : "0";
+                tr.append(td);
+            });
+            tbody.append(tr);
+        })
+    }
+
+
+    function sendData(form) {
+        const XHR = new XMLHttpRequest();
+
+        // Bind the FormData object and the form element
+        //const FD = new FormData(form);
+
+        // Define what happens on successful data submission
+        XHR.addEventListener("load", function (event) {
+            const data = JSON.parse(event.target.responseText);
+            console.log(data);
+            insertRows(data.data);
+        });
+
+        // Define what happens in case of error
+        XHR.addEventListener("error", function (event) {
+            alert('Oops! Something went wrong.');
+        });
+
+        // Set up our request
+        XHR.open("GET", "/api/v1/products");
+
+        // Add the required HTTP header for form data POST requests
+        XHR.setRequestHeader('Content-Type', 'application/json');
+
+        // Finally, send our data.
+        XHR.send(form);
+
+        // The data sent is what the user provided in the form
+        // XHR.send(FD);
+    }
+
+    sendData(null);
+</script>

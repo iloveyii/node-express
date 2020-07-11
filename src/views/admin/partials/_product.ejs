@@ -108,6 +108,14 @@
     </button>
 </form>
 
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <%- include("_table.ejs") %>
+        </div>
+    </div>
+</div>
+
 <script>
     function sendData(form) {
         const XHR = new XMLHttpRequest();
@@ -117,7 +125,8 @@
 
         // Define what happens on successful data submission
         XHR.addEventListener("load", function (event) {
-            alert(event.target.responseText);
+            // alert(event.target.responseText);
+            location.reload();
         });
 
         // Define what happens in case of error
@@ -151,5 +160,4 @@
         };
         sendData(JSON.stringify(product));
     });
-
 </script>

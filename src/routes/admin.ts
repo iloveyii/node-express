@@ -1,12 +1,11 @@
 import express from "express";
-import { getPage, saveData } from "../controllers/admin";
+import { getPage } from "../controllers/admin";
 
 
 const router = express.Router();
 
 router.route("/:id")
-    .get(getPage)
-    .post(saveData);
+    .get(getPage);
 
 router.route("")
     .get(getPage);
