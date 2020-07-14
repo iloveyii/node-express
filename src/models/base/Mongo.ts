@@ -74,7 +74,10 @@ class Mongo implements ModelI {
         if (model.deletedCount > 0) {
             this.setResponse(
                 true,
-                "Deleted record with condition " + JSON.stringify(condition.where)
+                {
+                    id: JSON.parse(JSON.stringify(condition.where))["_id"],
+                    message: "Deleted record with condition " + JSON.stringify(condition.where)
+                }
             );
         } else {
             this.setResponse(

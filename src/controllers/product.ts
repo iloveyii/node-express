@@ -7,15 +7,16 @@ import Product from "../models/Product";
 const database = new Database("shop");
 
 // @desc   Get all from Model
-// @route  GET /api/v1/product
+// @route  GET /api/v1/products
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("getProducts");
     const model = new Product(database, "products", undefined);
     await model.read();
     return res.status(200).send(model.response);
 };
 
 // @desc   Get a Model
-// @route  GET /api/v1/product/:id
+// @route  GET /api/v1/products/:id
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
     const model = new Product(database, "products", req.body.product);
