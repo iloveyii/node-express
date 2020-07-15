@@ -4,24 +4,22 @@ import compression from "compression";
 import bodyParser from "body-parser";
 import expressLayouts from "express-ejs-layouts";
 
+
 // ----------------------------------
 // Routes Import
 // ----------------------------------
 import user from "./routes/user";
 import product from "./routes/product";
+import article from "./routes/article";
 import login from "./routes/login";
 import front from "./routes/front";
 import admin from "./routes/admin";
-import { Database } from "./models/base/Database";
-import Mongo from "./models/base/Mongo";
 import * as path from "path";
-
 
 // ----------------------------------
 // Connect to DB
 // ----------------------------------
 const dialect = "mongodb"; // process.env.DB_DIALECT || "mongodb";
-
 
 // ----------------------------------
 // Express configuration
@@ -48,6 +46,7 @@ app.set("view engine", "ejs");
 // ----------------------------------
 app.use("/api/v1/users", user);
 app.use("/api/v1/products", product);
+app.use("/api/v1/articles", article);
 app.use("/api/v1/login", login);
 app.use("/admin", admin);
 app.use("/", front);

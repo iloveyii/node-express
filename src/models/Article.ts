@@ -1,26 +1,35 @@
 import Mongo from "./base/Mongo";
 import { Database } from "./base/Database";
 
+type CodeT = {
+    type: string,
+    paras: string
+};
+
+type ParaT = {
+    type: string,
+    title: string,
+    paras: string
+};
 
 type ArticleT = {
     id?: string;
-    name: string;
-    price: number;
-    currency: string;
+    category?: string;
+    subcategory?: string;
+    title?: string;
+    paras?: string;
+    body?: ParaT | CodeT [] ;
 };
 
 
 class Article extends Mongo {
 
-    constructor(database: Database, collection: string, private product?: ArticleT) {
-        super(database, collection, product);
+    constructor(database: Database, collection: string, private article?: ArticleT) {
+        super(database, collection, article);
     }
 
     rules() {
         return {
-            name: "required",
-            price: "required|between:1,999",
-            currency: "required|in:sek,euro,usd",
         };
     }
 }
