@@ -45,6 +45,7 @@ export const updateArticle = async (req: Request, res: Response, next: NextFunct
 // @desc   Delete Model
 // @route  DELETE /api/v1/article
 export const deleteArticle = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Deleting record from articles with id ", req.params.id);
     const model = new Article(database, "articles", req.body.article);
     const condition = new Condition({where: {id: req.params.id}});
     await model.delete(condition);
