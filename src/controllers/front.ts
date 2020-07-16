@@ -12,13 +12,32 @@ const database = new Database("shop");
 // @route  GET /api/v1/product
 export const getPage = async (req: Request, res: Response, next: NextFunction) => {
     console.log("Params : ", req.params);
-    const model = new Article(database, "articles", undefined);
-    await model.read();
-    const response = model.response;
-    const options = {extractStyles: true, extractScripts: true, layout: "front/layout", articles: response.data};
+    const options = {
+        extractStyles: true,
+        extractScripts: true,
+        layout: "front/layout"
+    };
     switch (req.params?.id) {
-        case "index":
-            res.render("front/articles.ejs", options);
+        case  "index":
+        case "articles":
+            const article = new Article(database, "articles", undefined);
+            await article.read();
+            res.render("front/articles.ejs", {
+                extractStyles: true,
+                extractScripts: true,
+                layout: "front/layout",
+                articles: article.response.data
+            });
+            break;
+        case "products":
+            const product = new Product(database, "products", undefined);
+            await product.read();
+            res.render("front/products.ejs", {
+                extractStyles: true,
+                extractScripts: true,
+                layout: "front/layout",
+                products: product.response.data
+            });
             break;
         case "carousel":
             res.render("front/partials/_carousel.ejs", options);
