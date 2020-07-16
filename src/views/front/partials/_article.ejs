@@ -1,0 +1,32 @@
+<% for(let i = 0; i < articles.length; i++) { %>
+    <div class="post">
+        <h1><%- articles[i].title %></h1>
+        <% articles[i].paras.split("\n").forEach( function (para) { %>
+            <p><%- para %></p>
+        <% }) %>
+
+        <% if(articles[i].body) { %>
+            <% for(let j = 0; j < articles[i].body.length; j++) { %>
+
+                <% if(articles[i].body[j].title) { %>
+                    <h2>
+                        <%- articles[i].body[j].title %>
+                    </h2>
+                <% } %>
+
+                <% articles[i].body[j].paras.split("\n").forEach( function (para) { %>
+                    <p><%- para %></p>
+                <% }) %>
+                <% if(articles[i].body[j].code) { %>
+                    <pre>
+                        <%- articles[i].body[j].code %>
+                    </pre>
+                <% } %>
+
+            <% } %>
+
+        <% } %>
+
+    </div>
+<% } %>
+
