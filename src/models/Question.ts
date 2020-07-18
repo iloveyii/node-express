@@ -10,6 +10,7 @@ type QuestionT = {
     _id?: string;
     type: string;
     text: string;
+    image_url: string;
     options: OptionT[];
     correct: number[];
     explanation: string;
@@ -18,14 +19,15 @@ type QuestionT = {
 
 class Question extends Mongo {
 
-    constructor(database: Database, collection: string, private data?: any) {
-        super(database, collection, data);
+    constructor(database: Database, collection: string, private question?: QuestionT) {
+        super(database, collection, question);
     }
 
     rules() {
         return {
             type: "required",
             text: "required",
+            image_url: "required",
             options: "required",
             correct: "required",
         };

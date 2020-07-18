@@ -19,8 +19,8 @@ type UserT = {
 
 class User extends Mongo {
 
-    constructor(database: Database, collection: string, private data?: any) {
-        super(database, collection, data);
+    constructor(database: Database, collection: string, private user?: UserT) {
+        super(database, collection, user);
     }
 
     rules() {

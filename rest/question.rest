@@ -1,0 +1,82 @@
+
+### ----------------------------------
+### Controller API
+### ----------------------------------
+
+###
+// Get all questions
+GET http://localhost:6600/api/v1/questions
+Content-Type: application/json
+
+
+###
+// Get a question
+GET http://localhost:6600/api/v1/questions/5f1365f139b5e36203aeff56
+Content-Type: application/json
+
+
+###
+// Post to page
+POST http://localhost:6600/api/v1/questions
+Content-Type: application/json
+
+{
+  "question": {
+    "type": "single",
+    "text": "What is the time for the public holiday ?",
+    "image_url": "",
+    "options": [
+      {
+        "id": 1,
+        "text": "Between 8 - 14"
+      },
+      {
+        "id": 2,
+        "text": "Between 8 - 17"
+      },
+      {
+        "id": 3,
+        "text": "Between 8 - 13"
+      }
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "The time for the public holiday is written in red"
+  }
+}
+
+
+###
+// Delete a question
+DELETE http://localhost:6600/api/v1/questions/5f019efc2a7003554cdd3a80
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUyZWNkNjRmNWFiNTQzZGZmODM1MCIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzcxNzE4MX0.vnUV3gKdJsj5B2xoxqPgHnzJHUBm-MGuX4yJbzDJQa8
+Content-Type: application/json
+
+
+###
+// Update a question
+PUT http://localhost:6600/api/v1/questions/5f019efc2a7003554cdd3a80
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUyZWNkNjRmNWFiNTQzZGZmODM1MCIsImVtYWlsIjoibmV3dXNlckB1c2VyLmNvbSIsImlhdCI6MTU5MzcxNzE4MX0.vnUV3gKdJsj5B2xoxqPgHnzJHUBm-MGuX4yJbzDJQa8
+Content-Type: application/json
+
+{
+  "product": {
+    "name": "Product 6",
+    "price": "500",
+    "currency": "sek"
+  }
+}
+
+
+###
+// Login a question
+POST http://localhost:6600/api/v1/login
+Content-Type: application/json
+
+{
+  "question": {
+    "email": "newquestion@question.com",
+    "password": "newquestion-pass"
+  }
+}
