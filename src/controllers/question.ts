@@ -10,7 +10,7 @@ const database = new Database("shop");
 // @route  GET /api/v1/questions
 export const getQuestions = async (req: Request, res: Response, next: NextFunction) => {
     console.log("getQuestions");
-    const model = new Question(database, "questions", undefined);
+    const model = new Question(database, undefined);
     await model.read();
     return res.status(200).send(model.response);
 };
@@ -19,7 +19,7 @@ export const getQuestions = async (req: Request, res: Response, next: NextFuncti
 // @route  GET /api/v1/questions/:id
 export const getQuestion = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
-    const model = new Question(database, "questions", req.body.question);
+    const model = new Question(database, req.body.question);
     await model.read(condition);
     return res.status(200).send(model.response);
 };
@@ -28,7 +28,7 @@ export const getQuestion = async (req: Request, res: Response, next: NextFunctio
 // @route  POST /api/v1/register
 export const createQuestion = async (req: Request, res: Response, next: NextFunction) => {
     console.log("Question received :", req.body.question);
-    const model = new Question(database, "questions", req.body.question);
+    const model = new Question(database, req.body.question);
     await model.validate() && await model.create();
     return res.status(201).send(model.response);
 };
@@ -37,7 +37,7 @@ export const createQuestion = async (req: Request, res: Response, next: NextFunc
 // @route  UPDATE /api/v1/question
 export const updateQuestion = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
-    const model = new Question(database, "questions", req.body.question);
+    const model = new Question(database, req.body.question);
     await model.validate() && await model.update(condition);
     return res.status(200).send(model.response);
 };
@@ -46,7 +46,7 @@ export const updateQuestion = async (req: Request, res: Response, next: NextFunc
 // @route  DELETE /api/v1/question
 export const deleteQuestion = async (req: Request, res: Response, next: NextFunction) => {
     console.log("Deleting record from questions with id ", req.params.id);
-    const model = new Question(database, "questions", req.body.question);
+    const model = new Question(database, req.body.question);
     const condition = new Condition({where: {id: req.params.id}});
     await model.delete(condition);
     return res.status(200).send(model.response);

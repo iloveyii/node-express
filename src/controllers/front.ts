@@ -20,7 +20,7 @@ export const getPage = async (req: Request, res: Response, next: NextFunction) =
     switch (req.params?.id) {
         case  "index":
         case "articles":
-            const article = new Article(database, "articles", undefined);
+            const article = new Article(database, undefined);
             await article.read();
             res.render("front/articles.ejs", {
                 extractStyles: true,
@@ -30,7 +30,7 @@ export const getPage = async (req: Request, res: Response, next: NextFunction) =
             });
             break;
         case "products":
-            const product = new Product(database, "products", undefined);
+            const product = new Product(database, undefined);
             await product.read();
             res.render("front/products.ejs", {
                 extractStyles: true,

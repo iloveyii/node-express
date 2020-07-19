@@ -13,6 +13,7 @@ import article from "./routes/article";
 import login from "./routes/login";
 import user from "./routes/user";
 import question from "./routes/question";
+import quiz from "./routes/quiz";
 
 import front from "./routes/front";
 import admin from "./routes/admin";
@@ -52,6 +53,7 @@ app.use("/api/v1/articles", article);
 app.use("/api/v1/login", login);
 app.use("/api/v1/users", user);
 app.use("/api/v1/questions", question);
+app.use("/api/v1/quizzes", quiz);
 
 app.use("/admin", admin);
 app.use("/", front);

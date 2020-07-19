@@ -15,9 +15,7 @@
     "dev": "nodemon server.ts",
     "prestart": "npx sequelize db:create --config=./sequelize/src/config/config.js",
     "serve": "cd dist && node server.js",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
-    "pretest": "npx sequelize db:create --config=./sequelize/src/config/config.js && npm run db:reset",
-    "db:reset": "ts-node src/models/Mongo_reset.ts && cd sequelize && npm run test"
+    "db:reset": "ts-node src/models/Mongo_reset.ts"
   },
   "keywords": [
     "node",
@@ -39,6 +37,7 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",

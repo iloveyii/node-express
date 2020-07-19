@@ -1,10 +1,14 @@
 import Mongo from "./base/Mongo";
 import { Database } from "./base/Database";
 
+type QuestionT = {
+    id: string,
+    response: number
+};
+
 type QuizT = {
     id: number,
-    questions: string[],
-    responses?: number[],
+    questions: QuestionT[],
     result: number,
     total: number
 };
@@ -16,11 +20,12 @@ type UserT = {
     quiz?: QuizT[];
 };
 
+const COLLECTION = "users";
 
 class User extends Mongo {
 
-    constructor(database: Database, collection: string, private user?: UserT) {
-        super(database, collection, user);
+    constructor(database: Database, private user?: UserT) {
+        super(database, COLLECTION, user);
     }
 
     rules() {

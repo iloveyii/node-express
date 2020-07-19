@@ -9,11 +9,11 @@ type ProductT = {
     currency: string;
 };
 
+const COLLECTION = "products";
 
 class Product extends Mongo {
-
-    constructor(database: Database, collection: string, private product?: ProductT) {
-        super(database, collection, product);
+    constructor(database: Database, private product?: ProductT) {
+        super(database, COLLECTION, product);
     }
 
     rules() {

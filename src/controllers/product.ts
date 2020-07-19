@@ -10,7 +10,7 @@ const database = new Database("shop");
 // @route  GET /api/v1/products
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
     console.log("getProducts");
-    const model = new Product(database, "products", undefined);
+    const model = new Product(database, undefined);
     await model.read();
     return res.status(200).send(model.response);
 };
@@ -19,7 +19,7 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
 // @route  GET /api/v1/products/:id
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
-    const model = new Product(database, "products", req.body.product);
+    const model = new Product(database, req.body.product);
     await model.read(condition);
     return res.status(200).send(model.response);
 };
@@ -28,7 +28,7 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 // @route  POST /api/v1/register
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     console.log("Product received :", req.body.product);
-    const model = new Product(database, "products", req.body.product);
+    const model = new Product(database, req.body.product);
     await model.validate() && await model.create();
     return res.status(201).send(model.response);
 };
@@ -37,7 +37,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 // @route  UPDATE /api/v1/product
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
-    const model = new Product(database, "products", req.body.product);
+    const model = new Product(database, req.body.product);
     await model.validate() && await model.update(condition);
     return res.status(200).send(model.response);
 };
@@ -45,7 +45,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 // @desc   Delete Model
 // @route  DELETE /api/v1/product
 export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
-    const model = new Product(database, "products", req.body.product);
+    const model = new Product(database, req.body.product);
     const condition = new Condition({where: {id: req.params.id}});
     await model.delete(condition);
     return res.status(200).send(model.response);

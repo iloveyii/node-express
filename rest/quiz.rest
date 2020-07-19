@@ -1,0 +1,19 @@
+
+### ----------------------------------
+### Controller API
+### ----------------------------------
+
+
+###
+// Get a quiz
+GET http://localhost:6600/api/v1/quizzes/5f1385d60c76680e24a185a6
+Content-Type: application/json
+
+
+###
+// Create a quiz for a user id
+POST http://localhost:6600/api/v1/quizzes/5f13873fb3f4971b7fc55a1c
+Content-Type: application/json
+
+###
+

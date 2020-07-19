@@ -18,19 +18,19 @@ type ArticleT = {
     subcategory?: string;
     title?: string;
     paras?: string;
-    body?: ParaT | CodeT [] ;
+    body?: ParaT | CodeT [];
 };
 
+const COLLECTION = "articles";
 
 class Article extends Mongo {
 
-    constructor(database: Database, collection: string, private article?: ArticleT) {
-        super(database, collection, article);
+    constructor(database: Database, private article?: ArticleT) {
+        super(database, COLLECTION, article);
     }
 
     rules() {
-        return {
-        };
+        return {};
     }
 }
 

@@ -15,7 +15,7 @@ class Mongo implements ModelI {
         data: []
     };
 
-    constructor(private database: Database, private readonly collection: string, private data: any) {
+    constructor(private database: Database, private readonly collection: string, public data: any) {
         console.log("Mongo Collection : ", collection, data);
     }
 
@@ -92,7 +92,7 @@ class Mongo implements ModelI {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
         const model = await collection.deleteMany(condition?.where);
-        console.log("deleted : ", model.deletedCount);
+        console.log("Deleted : ", model.deletedCount);
     }
 
     // ----------------------------------

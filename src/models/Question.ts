@@ -16,11 +16,12 @@ type QuestionT = {
     explanation: string;
 };
 
+const COLLECTION = "questions";
 
 class Question extends Mongo {
 
-    constructor(database: Database, collection: string, private question?: QuestionT) {
-        super(database, collection, question);
+    constructor(database: Database, private question?: QuestionT) {
+        super(database, COLLECTION, question);
     }
 
     rules() {
