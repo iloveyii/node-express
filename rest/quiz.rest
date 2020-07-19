@@ -6,7 +6,7 @@
 
 ###
 // Get a quiz
-GET http://localhost:6600/api/v1/quizzes/5f1385d60c76680e24a185a6
+GET http://localhost:6600/api/v1/quizzes/5f14a0a5606d694572f4882a
 Content-Type: application/json
 
 
