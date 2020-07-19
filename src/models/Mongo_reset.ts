@@ -1,20 +1,16 @@
 import fs from "fs";
 import path from "path";
+
 import { Database } from "./base/Database";
 import { ConditionI } from "../interfaces";
 import Condition from "./base/Condition";
-import User from "./User";
 
 
 async function reset_db() {
-    const database = new Database("shop");
-    const model = await new User(database, undefined);
     const condition1: ConditionI = new Condition({where: {}});
-
-    console.log("----------------DELETE------------------");
-    console.log((await model.deleteMany(condition1)));
-
     const basename = path.basename(__filename);
+    const database = new Database("shop");
+
     fs
         .readdirSync(__dirname)
         .filter(file => {
@@ -22,16 +18,13 @@ async function reset_db() {
         })
         .forEach(async (file) => {
             const basename = path.parse(file).name;
-            console.log(basename);
-            const Model = await import("./" + basename);
-            console.log(typeof Model);
-            const model = await new Model(database, undefined);
-            const deleted = await model.deleteMany(condition1);
-            console.log(basename, deleted);
+            const file_path = path.resolve(__dirname, "./" + basename); // Provide relative path
+            const Model = await require(file_path).default;
+            const model = new Model(database, undefined);
+            await model.deleteMany(condition1);
         });
 }
 
 reset_db().then(() => {
     console.log("Mongo DB reset complete");
-    process.exit(0);
 });
