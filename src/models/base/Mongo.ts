@@ -100,7 +100,6 @@ class Mongo implements ModelI {
     // ----------------------------------
     setResponse(success: boolean, data: any) {
         // add id from _id
-        console.log("data", data);
         let newData = [];
         if (!Array.isArray(data)) data = [data];
         newData = data.map((d: any) => {

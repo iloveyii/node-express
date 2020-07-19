@@ -7,7 +7,6 @@ const dialect = process.env.CONTROLLER_DIALECT || "mongodb";
 
 class Condition implements ConditionI {
     constructor(private readonly condition: ConditionT) {
-        console.log("Inside Condition constructor : ", dialect, condition);
         if (dialect === "mongodb") {
             if (condition.where.id) {
                 condition.where["_id"] = new ObjectId(condition.where.id);
