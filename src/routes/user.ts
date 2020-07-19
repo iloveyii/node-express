@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.route("/:id")
     .get([authenticate_user, same_user_id], getUser)
-    .delete([authenticate_user, same_user_id], deleteUser)
+    .delete(deleteUser) // should admin delete
     .put([authenticate_user, same_user_id], updateUser);
 
 router.route("/")

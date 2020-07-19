@@ -20,8 +20,8 @@ async function reset_db() {
             const basename = path.parse(file).name;
             const file_path = path.resolve(__dirname, "./" + basename); // Provide relative path
             const Model = await require(file_path).default;
-            const model = new Model(database, undefined);
-            await model.deleteMany(condition1);
+            const model = await new Model(database, undefined);
+            model.deleteMany && model.deleteMany(condition1);
         });
 }
 

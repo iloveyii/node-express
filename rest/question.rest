@@ -24,7 +24,7 @@ Content-Type: application/json
   "question": {
     "type": "single",
     "text": "What is the time for the public holiday ?",
-    "image_url": "",
+    "image_url": "img",
     "options": [
       {
         "id": 1,
