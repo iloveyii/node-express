@@ -24,7 +24,7 @@ Content-Type: application/json
 {
   "user": {
     "email": "newuser2@user.com",
-    "password": "newuser-pass",
+    "password": "newuser2-pass",
     "quiz": []
   }
 }

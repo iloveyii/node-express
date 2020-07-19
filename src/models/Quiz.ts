@@ -23,15 +23,8 @@ class Quiz {
         const q = {id: next_id, questions: [{id: "aaaa", response: 0}, {id: "bbbb", response: 0}], result: 0, total: 0};
         quiz.push(q);
         console.log(JSON.stringify(model.response));
-
-        // model.response.data[0].quiz = quiz;
-        // model.data = model.response.data;
         const user = new User(database, model.response.data[0]);
         await user.update(condition);
-        // model.setResponse(
-        //     true,
-        //     model.response.data
-        // );
         this.model = model;
         return this;
     }
