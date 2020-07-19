@@ -25,19 +25,7 @@ Content-Type: application/json
   "user": {
     "email": "newuser2@user.com",
     "password": "newuser-pass",
-    "quiz": [
-      {
-        "id": 1,
-        "questions": [
-          {
-            "id": "aaaaaa",
-            "response": 1
-          }
-        ],
-        "result": 1,
-        "total": 1
-      }
-    ]
+    "quiz": []
   }
 }
 
