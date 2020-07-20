@@ -15,7 +15,9 @@
     "dev": "nodemon server.ts",
     "prestart": "npx sequelize db:create --config=./sequelize/src/config/config.js",
     "serve": "cd dist && node server.js",
-    "db:reset": "ts-node src/models/Mongo_reset.ts"
+    "db:reset": "ts-node src/models/Mongo_reset.ts",
+    "mongoexport": "mongoexport -d shop -c questions --jsonArray --pretty -o db/questions.json & mongoexport -d shop -c users --jsonArray --pretty -o db/users.json & mongoexport -d shop -c articles --jsonArray --pretty -o db/articles.json & mongoexport -d shop -c products --jsonArray --pretty -o db/products.json",
+    "mongoimport": " mongoimport -d shop -c questions --jsonArray --file db/questions.json & mongoimport -d shop -c users --jsonArray --file db/users.json &  mongoimport -d shop -c articles --jsonArray --file db/articles.json &  mongoimport -d shop -c products --jsonArray --file db/products.json"
   },
   "keywords": [
     "node",

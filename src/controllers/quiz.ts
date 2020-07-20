@@ -12,14 +12,15 @@ const database = new Database("shop");
 // @route  GET /api/v1/quizzes/:id
 export const getQuiz = async (req: Request, res: Response, next: NextFunction) => {
     console.log("getQuiz", req.params);
-    if(req.params.id === "undefined") return res.status(404).send({success: false, data: []});
+    if (req.params.id === "undefined") return res.status(404).send({success: false, data: []});
     const condition = new Condition({where: {id: req.params.id}});
     const model = new User(database, undefined);
     await model.read(condition);
     const quiz = model.response.data[0].quiz[model.response.data[0].quiz.length - 1];
     console.log("quiz", quiz);
-    const question_ids = quiz.questions.map((q: any) => q.id);
+    let question_ids = quiz.questions.map((q: any) => q.id);
     console.log(question_ids);
+    question_ids = question_ids.filter((id: any) => id);
     // find quizzes
     const condition1 = new Condition({where: {id: question_ids}});
     const question = new Question(database, undefined);
