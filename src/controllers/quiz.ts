@@ -12,6 +12,7 @@ const database = new Database("shop");
 // @route  GET /api/v1/quizzes/:id
 export const getQuiz = async (req: Request, res: Response, next: NextFunction) => {
     console.log("getQuiz", req.params);
+    if(req.params.id === "undefined") return res.status(404).send({success: false, data: []});
     const condition = new Condition({where: {id: req.params.id}});
     const model = new User(database, undefined);
     await model.read(condition);
