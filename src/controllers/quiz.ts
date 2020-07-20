@@ -14,18 +14,25 @@ export const getQuiz = async (req: Request, res: Response, next: NextFunction) =
     console.log("getQuiz", req.params);
     if (req.params.id === "undefined") return res.status(404).send({success: false, data: []});
     const condition = new Condition({where: {id: req.params.id}});
+    // Find the first user
     const model = new User(database, undefined);
     await model.read(condition);
-    const quiz = model.response.data[0].quiz[model.response.data[0].quiz.length - 1];
-    console.log("quiz", quiz);
-    let question_ids = quiz.questions.map((q: any) => q.id);
-    console.log(question_ids);
-    question_ids = question_ids.filter((id: any) => id);
-    // find quizzes
-    const condition1 = new Condition({where: {id: question_ids}});
-    const question = new Question(database, undefined);
-    await question.read(condition1);
-    return res.status(200).send(question.response);
+    // Get last quiz
+    const last_quiz_id = model.response.data[0].quiz.length > 0 ? model.response.data[0].quiz.length - 1 : 0;
+    const quiz = model.response.data[0].quiz[last_quiz_id];
+    console.log("quiz", quiz, JSON.stringify(model.response));
+    if (!quiz) {
+        return res.status(200).send({success: false, data: [{id: 0}]});
+    } else {
+        let question_ids = quiz.questions.map((q: any) => q.id);
+        console.log(question_ids);
+        question_ids = question_ids.filter((id: any) => id);
+        // find Questions
+        const condition1 = new Condition({where: {id: question_ids}});
+        const question = new Question(database, undefined);
+        await question.read(condition1);
+        return res.status(200).send(question.response);
+    }
 };
 
 // @desc   Register/Create a Model - using bcrypt hashed passwords
