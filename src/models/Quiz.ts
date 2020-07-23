@@ -1,6 +1,8 @@
 import Mongo from "./base/Mongo";
+import Condition from "./base/Condition";
 import { Database } from "./base/Database";
 import { ObjectId } from "mongodb";
+import { ConditionI } from "../interfaces";
 
 type QuizT = {
     _id?: string;
@@ -32,11 +34,9 @@ class Quiz extends Mongo {
     async create(): Promise<any> {
         // Get random questions ids
         const randomQuestions = await this.randomQuestions();
-        console.log(randomQuestions);
         const db = await this.database.db();
         const collection = await db.collection(COLLECTION);
         const {user_id} = this.data;
-        console.log("user_id", user_id);
         const insertMany = randomQuestions.map((rQ: any) => (
             {
                 quiz_id: 1,
@@ -47,11 +47,43 @@ class Quiz extends Mongo {
             }
         ));
 
-        const model = await collection.insertMany(insertMany);
-        this.setResponse(
-            true,
-            model.ops[0]
-        );
+        if (insertMany.length > 0) {
+            // Delete previous one
+            const condition = new Condition({where: {}});
+            await collection.deleteMany(condition?.where);
+            const model = await collection.insertMany(insertMany);
+            this.setResponse(
+                true,
+                model.ops
+            );
+        } else {
+            this.setResponse(
+                false,
+                "Some error occurred"
+            );
+        }
+        return this;
+    }
+
+    async readForUser(user_id: string) {
+        const db = await this.database.db();
+        const collection = await db.collection("vw_quizzes_details");
+        const condition = new Condition({where: {user_id: new ObjectId(user_id)}});
+        console.log("readForUser ", condition);
+        const model = await collection.find(condition?.where);
+        const arr = await model.toArray();
+        console.log(arr);
+        if (arr.length > 0) {
+            this.setResponse(
+                true,
+                arr
+            );
+        } else {
+            this.setResponse(
+                false,
+                ["No record found with condition " + JSON.stringify(condition?.where)]
+            );
+        }
         return this;
     }
 }
