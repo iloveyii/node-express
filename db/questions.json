@@ -33,5 +33,41 @@
 		"4"
 	],
 	"explanation": "Both moped class 1 and class 2 may be on carriage way"
+},
+{
+	"_id": {
+		"$oid": "5f1598559d3f5024ae52d7b3"
+	},
+	"text": "What does the sign shows ?",
+	"type": "single",
+	"image_url": "/images/a_20_roadworks.jpg",
+	"options": [
+		"Road works in progress",
+		"Farming fields",
+		"Building constructions",
+		"Pedestrian way"
+	],
+	"correct": [
+		"1"
+	],
+	"explanation": "Work road in progress.\nShow considerations.\nPoor road surface.\nLoose chippings."
+},
+{
+	"_id": {
+		"$oid": "5f159cff15d308284a97e5b6"
+	},
+	"text": "What does the sign means ?",
+	"type": "single",
+	"image_url": "/images/a_24a_sidewindsfromright.jpg",
+	"options": [
+		"Move to the left.",
+		"Work in progress.",
+		"Side winds from left.",
+		"Side winds from right."
+	],
+	"correct": [
+		"4"
+	],
+	"explanation": "Be especially cautious if you are driving a large vehicle or towing a caravan."
 }]
 

@@ -61,3 +61,51 @@ microservice.
      
    * TypeError: _gracefulFs(...).realpathSync.native is not a function
      * Use node 10
+     
+     
+## Aggregation
+db.Quiz.aggregate([
+
+    // Join with user table
+    {
+        $lookup:{
+            from: "User",       // other table name
+            localField: "user_id",   // name of users table field
+            foreignField: "_id", // name of userinfo table field
+            as: "User"         // alias for userinfo table
+        }
+    },
+    {   $unwind:"$User" },     // $unwind used for getting data in object or for one record only
+
+    // Join with question table
+    {
+        $lookup:{
+            from: "Question", 
+            localField: "question_id", 
+            foreignField: "_id",
+            as: "Question"
+        }
+    },
+    {   $unwind:"$Question" }, // removes array brackets in projection
+
+    // define some conditions here 
+    // {
+       // $match:{
+         //   $and:[{"userName" : "admin"}]
+        //}
+    //},
+
+    // define which fields are you want to fetch
+    {   
+      $project:{
+           _id : 1,
+           response : 1,
+           user_id: "$User._id",
+           //User : {
+             //  email: 1
+           //},
+           // Question: "$Question"
+           q_text: "$Question.text"
+        } 
+    }
+]);

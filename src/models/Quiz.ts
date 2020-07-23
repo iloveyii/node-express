@@ -17,7 +17,7 @@ class Quiz {
     // create - create will add quiz to User with questions ids but will return full questions
     // read/:id integer - will read a quiz from User, fetch related questions and send it
     async create(): Promise<any> {
-        const random_count = 2;
+        const random_count = 4;
         const condition = new Condition({where: {id: this.user_id}});
         const model = new User(database, undefined);
         await model.read(condition);

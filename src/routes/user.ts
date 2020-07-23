@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, getUsers, createUser, updateUser, deleteUser } from "../controllers/user";
+import { getUser, getUsers, createUser, updateUser, deleteUser, getLatestQuiz } from "../controllers/user";
 import { authenticate_user } from "../middlewares/authenticate_user";
 import { same_user_id } from "../middlewares/same_user_id";
 
@@ -14,5 +14,8 @@ router.route("/:id")
 router.route("/")
     .get(getUsers)
     .post(createUser);
+
+router.route("/:id/latest-quiz")
+    .get(getLatestQuiz);
 
 export default router;

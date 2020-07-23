@@ -51,3 +51,13 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
     await model.delete(condition);
     return res.status(200).send(model.response);
 };
+
+// @desc   Get Quizzes
+// @route  GET /api/v1/users/:id/quizzes
+export const getLatestQuiz = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Get quizzes for user with id ", req.params.id);
+    const model = new User(database, undefined);
+    const condition = new Condition({where: {id: req.params.id}});
+    await model.read(condition);
+    return res.status(200).send(await model.latest_quiz(false));
+};

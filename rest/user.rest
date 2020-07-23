@@ -62,3 +62,12 @@ Content-Type: application/json
     "password": "newuser-pass"
   }
 }
+
+###
+// Get a user's latest quiz
+GET http://localhost:6600/api/v1/users/5f158bd86afc3f09504bc3f0/latest-quiz
+
+###
+
+
+
