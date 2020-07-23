@@ -1,56 +1,58 @@
-import { Database } from "../models/base/Database";
-import Condition from "../models/base/Condition";
-import User from "../models/User";
-import { nRandomItems } from "../utils";
-import Question from "./Question";
+import Mongo from "./base/Mongo";
+import { Database } from "./base/Database";
+import { ObjectId } from "mongodb";
 
+type QuizT = {
+    _id?: string;
+    user_id: string;
+};
 
-const database = new Database("shop");
+const COLLECTION = "quizzes";
+const QUIZ_SIZE = 3;
 
-class Quiz {
-    public model: any = undefined;
+class Quiz extends Mongo {
 
-    constructor(private user_id: string, private questions_count: number) {
+    constructor(database: Database, private quiz?: QuizT) {
+        super(database, COLLECTION, quiz);
     }
 
-    // CRUD - new
-    // create - create will add quiz to User with questions ids but will return full questions
-    // read/:id integer - will read a quiz from User, fetch related questions and send it
+    rules() {
+        return {
+            user_id: "required",
+        };
+    }
+
+    async randomQuestions() {
+        const db = await this.database.db();
+        const collection = await db.collection("vw_questions_random");
+        const model = await collection.find({}).limit(QUIZ_SIZE);
+        return await model.toArray();
+    }
+
     async create(): Promise<any> {
-        const random_count = 4;
-        const condition = new Condition({where: {id: this.user_id}});
-        const model = new User(database, undefined);
-        await model.read(condition);
-        const {quiz} = model.response.data[0];
-        const next_id = quiz.length + 1;
-        const random_questions = await this.getRandomQuestions(random_count);
-        const formatted = await this.formatRandomQuestions(random_questions);
+        // Get random questions ids
+        const randomQuestions = await this.randomQuestions();
+        console.log(randomQuestions);
+        const db = await this.database.db();
+        const collection = await db.collection(COLLECTION);
+        const {user_id} = this.data;
+        console.log("user_id", user_id);
+        const insertMany = randomQuestions.map((rQ: any) => (
+            {
+                quiz_id: 1,
+                user_id: new ObjectId(user_id),
+                question_id: new ObjectId(rQ._id),
+                response: 0,
+                version: 1
+            }
+        ));
 
-        const q = {id: next_id, questions: formatted, result: 0, total: 0};
-        quiz.push(q);
-        console.log(JSON.stringify(model.response));
-        const user = new User(database, model.response.data[0]);
-        await user.update(condition);
-        this.model = model;
+        const model = await collection.insertMany(insertMany);
+        this.setResponse(
+            true,
+            model.ops[0]
+        );
         return this;
-    }
-
-    async getRandomQuestions(random_count: number) {
-        const condition = new Condition({where: {}});
-        const model = new Question(database, undefined);
-        await model.read(condition);
-        const questions = model.response.data;
-        const random_question = nRandomItems(questions, random_count);
-        return random_question;
-    }
-
-    formatRandomQuestions(random_question: any[]) {
-        const formatted = random_question.map(q => ({id: q._id, response: 0}));
-        return formatted;
-    }
-
-    get response(): any {
-        return this.model.response;
     }
 }
 

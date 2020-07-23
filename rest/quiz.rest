@@ -12,8 +12,14 @@ Content-Type: application/json
 
 ###
 // Create a quiz for a user id
-POST http://localhost:6600/api/v1/quizzes/5f1481e3dbbc292c38a110f3
+POST http://localhost:6600/api/v1/quizzes
 Content-Type: application/json
+
+{
+  "quiz": {
+    "user_id": "5f158bd86afc3f09504bc3f0"
+  }
+}
 
 ###
 
