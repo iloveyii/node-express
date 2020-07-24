@@ -9,7 +9,7 @@ import Article from "../models/Article";
 const database = new Database("shop");
 
 // @desc   Get all from Model
-// @route  GET /api/v1/product
+// @route  GET /api/v1/crud
 export const getPage = async (req: Request, res: Response, next: NextFunction) => {
     console.log("Params : ", req.params);
     const options = {

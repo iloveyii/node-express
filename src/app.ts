@@ -14,6 +14,11 @@ import login from "./routes/login";
 import user from "./routes/user";
 import question from "./routes/question";
 import quiz from "./routes/quiz";
+// Receipt
+import make from "./routes/make";
+import product2 from "./routes/product2";
+import fault from "./routes/fault";
+import service from "./routes/service";
 
 import front from "./routes/front";
 import admin from "./routes/admin";
@@ -54,6 +59,11 @@ app.use("/api/v1/login", login);
 app.use("/api/v1/users", user);
 app.use("/api/v1/questions", question);
 app.use("/api/v1/quizzes", quiz);
+
+app.use("/api/v1/makes", make);
+app.use("/api/v1/products2", product2);
+app.use("/api/v1/faults", fault);
+app.use("/api/v1/services", service);
 
 app.use("/admin", admin);
 app.use("/", front);
